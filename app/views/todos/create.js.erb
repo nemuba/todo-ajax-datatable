@@ -1,0 +1,20 @@
+$('turbolinks:load').ready(function() {
+  <!-- Verifica se não houve nenhum erro e carrega os dados através da chamada AJAX -->
+  <% if @todo.errors.empty? %>
+    <!-- Fecha o modal -->
+    App.closeModal();
+
+    <!-- Recarrega o datatable usando a chamada AJAX -->
+    App.refreshDataTableAjax();
+  
+  <!-- Se houver erro recarrega o modal -->
+  <% else %>
+    <!-- Fecha o modal -->
+    App.closeModal();
+
+    <!-- Recarrega o modal -->
+    App.renderModal('<%= j render("shared/modal", modal_title: 'New Todo') { render("form", todo: @todo ) } %>');
+  <% end %>
+
+});
+

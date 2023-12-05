@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  username: postgres
+  password: admin
+  port: 5432
+
+development:
+  <<: *default
+  database: ajax-jquery-crud_development
+
+test:
+  <<: *default
+  database: ajax-jquery-crud_test
+
+production:
+  <<: *default
+  database: ajax-jquery-crud_production
+  username: ajax-jquery-crud
+  password: <%= ENV['AJAX-JQUERY-CRUD_DATABASE_PASSWORD'] %>

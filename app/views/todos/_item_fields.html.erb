@@ -1,0 +1,11 @@
+<div class="mt-2 nested-fields">
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status, "Status" %>
+    <%= f.check_box :status %>
+  </div>
+  <%= link_to_remove_association 'Remove', f, class: 'btn btn-sm btn-danger mt-2' %>
+</div>

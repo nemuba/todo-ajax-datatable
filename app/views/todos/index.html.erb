@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <h1>Todos</h1>
+</div>
+
+<div id="new_todo" class="container mb-3">
+
+</div>
+
+<div class="container">
+  <table id="todos" class="table table-hover table-striped table-bordered responsive nowrap" data-source="<%= todos_path(format: :json) %>">
+  </table>
+  <%= link_to 'New Todo', new_todo_path, remote: true, class: 'btn btn-primary' %>
+</div>
+

@@ -1,0 +1,37 @@
+// Datatables
+@import 'datatables/jquery.dataTables';
+//Bootstrap4 theme
+@import 'datatables/dataTables.bootstrap4';
+@import 'datatables/extensions/Responsive/responsive.bootstrap4';
+@import 'datatables/extensions/Buttons/buttons.bootstrap4';
+
+// optional remove '//=' to enable
+
+@import 'datatables/extensions/AutoFill/autoFill.bootstrap4';
+@import 'datatables/extensions/Buttons/buttons.bootstrap4';
+@import 'datatables/extensions/ColReorder/colReorder.bootstrap4';
+@import 'datatables/extensions/FixedColumns/fixedColumns.bootstrap4';
+@import 'datatables/extensions/FixedHeader/fixedHeader.bootstrap4';
+@import 'datatables/extensions/KeyTable/keyTable.bootstrap4';
+@import 'datatables/extensions/Responsive/responsive.bootstrap4';
+@import 'datatables/extensions/RowGroup/rowGroup.bootstrap4';
+@import 'datatables/extensions/RowReorder/rowReorder.bootstrap4';
+@import 'datatables/extensions/Scroller/scroller.bootstrap4';
+@import 'datatables/extensions/Select/select.bootstrap4';
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: 0px !important;
+  margin-left: 0px !important;
+  display: inline-block;
+  border: 1px solid #dee2e6;
+  border-radius: 0px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover .first {
+  border: 1px solid #333 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  border: 1px solid #007bff !important;
+}

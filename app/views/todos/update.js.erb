@@ -1,0 +1,21 @@
+$('turbolinks:load').ready(function() {
+
+  <!-- Verifica se não teve algum erro -->
+  <% if @todo.errors.empty? %>
+
+    <!-- Fecha modal -->
+    App.closeModal();
+  
+    <!-- Recarrega o datatable -->
+    App.refreshDataTableAjax();
+
+  <!-- Senão recarrega o modal com os erros -->
+  <% else %>
+    <!-- Fecha o modal -->
+    App.closeModal();
+
+    <!-- Recarrega o modal com os erros -->
+    App.renderModal('<%= j render("shared/modal", modal_title: 'Edit Todo') { render("form", todo: @todo ) } %>');
+  <% end %>
+});
+

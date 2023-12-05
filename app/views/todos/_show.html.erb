@@ -1,0 +1,29 @@
+<p>
+  <strong>Title:</strong>
+  <%= todo.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= todo.description %>
+</p>
+
+<p>
+  <strong>Done:</strong>
+  <%= check_box_tag :done, 'yes', todo.done, disabled: true %>
+</p>
+
+<h4>Items: <%= todo.items.size %></h4>
+
+<% todo.items.each do |item| %>
+  <p>
+    <strong>Description:</strong>
+    <%= item.description %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= check_box_tag :status, 'yes', item.status, disabled: true %>
+  </p>
+<% end %>
+

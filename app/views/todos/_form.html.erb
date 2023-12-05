@@ -1,0 +1,46 @@
+<%= form_with(model: todo, remote: true) do |form| %>
+  <% if todo.errors.any? %>
+    <div class="form-group">
+      <h2 class="text-danger"><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+
+      <ul class="list-group">
+      <% todo.errors.full_messages.each do |message| %>
+        <li class="list-group-item list-group-item-danger"><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_field :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :done, class: 'form-label' %>
+    <%= form.check_box :done %>
+  </div>
+
+  <div id="items">
+    <h4 id="items-count">Items: <%= form.object.items.size %></h4>
+    <%= form.fields_for :items do |item| %>
+      <%= render 'item_fields', f: item %>
+    <% end %>
+    <div class="row justify-content-end mr-2">
+      <%= link_to_add_association 'add item', form, :items, class: 'btn btn-sm btn-primary mb-2' %>
+    </div>
+  </div>
+
+  <div class="row justify-content-start">
+    <%= form.submit nil, class: 'btn btn-sm btn-primary ml-3' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  App.cocoonItems();
+</script>
