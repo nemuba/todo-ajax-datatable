@@ -62,3 +62,115 @@ $(document).on('turbolinks:before-cache', function () {
     return dataTable = null;
   }
 });
+
+$.fn.dataTable.ext.buttons.reload = {
+  text: '<i class="fa-solid fa-rotate-right"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    dt.ajax.reload();
+  }
+};
+
+$.fn.dataTable.ext.buttons.print = {
+  text: '<i class="fa-solid fa-print"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    $('.dt-buttons').hide();
+    $('#todos_filter').hide();
+    $('a#new_todo').hide();
+    $('#todos tfoot').hide();
+    window.print();
+    $('.dt-buttons').show();
+    $('#todos_filter').show();
+    $('a#new_todo').show();
+    $('#todos tfoot').show();
+  }
+};
+
+$.fn.dataTable.ext.buttons.export_csv = {
+  text: 'CSV<i class="fa-solid fa-download"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    var url = dt.ajax.url()
+    url = url.replace('.json', '.csv')
+    window.open(url)
+  }
+};
+
+$.fn.dataTable.ext.buttons.export_pdf = {
+  text: 'PDF<i class="fa-solid fa-download"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    var url = dt.ajax.url()
+    url = url.replace('.json', '.pdf')
+    window.open(url)
+  }
+};
+
+$.fn.dataTable.ext.buttons.select_all = {
+  text: '<i class="fa-solid fa-check"></i>',
+  attr: {
+    class: 'btn btn-primary select-all'
+  },
+  action: function (e, dt, node, config) {
+    if (dt.rows({ selected: true }).count() == dt.rows().count()) {
+      dt.rows().deselect();
+      $('.select-all').removeClass('btn-secondary');
+    } else {
+      dt.rows().select();
+      $('.select-all').addClass('btn-secondary');
+    }
+  }
+};
+
+
+$.fn.dataTable.ext.buttons.delete_all = {
+  text: 'Deletar em lote <i class="fa-solid fa-file"></i>',
+  attr: {
+    class: 'btn btn-danger'
+  },
+  action: function (e, dt, node, config) {
+    var ids = dt.rows({ selected: true }).ids().toArray();
+    if (ids.length == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Nenhum registro selecionado!'
+      })
+      return;
+    }
+
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: "Você não poderá reverter isso!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, delete!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        var url = dt.ajax.url()
+        url = url.replace('.json', '/delete_all.js')
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          data: { ids: ids },
+          success: function (data) {
+            dt.ajax.reload();
+            $('.select-all').removeClass('btn-secondary');
+          }
+        });
+      }
+    })
+  }
+};

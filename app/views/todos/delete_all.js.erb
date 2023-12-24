@@ -1,0 +1,14 @@
+$('turbolinks:load').ready(function() {
+    <!-- Recarrega o datatable usando a chamada AJAX -->
+    App.refreshDataTableAjax();
+
+    Toastify({
+        text: "Remoção em lote realizada com sucesso!",
+        duration: 5000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        stopOnFocus: true,
+    }).showToast();
+});

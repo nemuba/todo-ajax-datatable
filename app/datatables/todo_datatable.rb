@@ -30,6 +30,7 @@ class TodoDatatable < AjaxDatatablesRails::ActiveRecord
         title: record.title,
         description: record.description,
         done: record.done,
+        items: record.items.size,
         created_at: record.decorate.created_at,
         updated_at: record.decorate.updated_at,
         actions: record.decorate.dt_actions,

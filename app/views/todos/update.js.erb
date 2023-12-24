@@ -9,6 +9,15 @@ $('turbolinks:load').ready(function() {
     <!-- Recarrega o datatable -->
     App.refreshDataTableAjax();
 
+    Toastify({
+      text: 'Atualizado com sucesso!',
+      duration: 3000,
+      gravity: 'top',
+      position: 'right',
+      backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+      stopOnFocus: true,
+    }).showToast();
+
   <!-- Senão recarrega o modal com os erros -->
   <% else %>
     <!-- Fecha o modal -->
@@ -16,6 +25,15 @@ $('turbolinks:load').ready(function() {
 
     <!-- Recarrega o modal com os erros -->
     App.renderModal('<%= j render("shared/modal", modal_title: 'Edit Todo') { render("form", todo: @todo ) } %>');
+
+     Toastify({
+      text: 'Preencha todos os campos !',
+      duration: 3000,
+      gravity: 'top',
+      position: 'right',
+      backgroundColor: 'linear-gradient(to right, #ff5f6d, #ffc371)',
+      stopOnFocus: true,
+    }).showToast();
   <% end %>
 });
 

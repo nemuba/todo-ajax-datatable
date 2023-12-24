@@ -5,11 +5,19 @@ class TodosController < ApplicationController
 
   # GET /todos or /todos.json
   def index
-    @todos = Todo.all
-
     respond_to do |format|
       format.html
       format.json { render json: TodoDatatable.new(params, view_context: view_context) }
+      format.csv { send_data Todo.to_csv, filename: "todos_#{Date.today}.csv" }
+      format.pdf do
+        render pdf: 'Todos',
+               locals: { todos: Todo.all },
+               page_size: 'A4',
+               template: 'todos/pdf.html.erb',
+               layout: 'pdf.html.erb',
+               orientation: 'Landscape',
+               encoding: 'UTF-8'
+      end
     end
   end
 
@@ -65,6 +73,14 @@ class TodosController < ApplicationController
     end
   end
 
+  def delete_all
+    Todo.where(id: params[:ids]).destroy_all
+    respond_to do |format|
+      format.js
+      format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -80,7 +96,7 @@ class TodosController < ApplicationController
         :title,
         :description,
         :done, {
-          items_attributes: [:id, :description, :status, :_destroy]
+          items_attributes: %I[id description status _destroy]
         }
     )
   end

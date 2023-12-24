@@ -10,7 +10,18 @@
 
 <div class="container">
   <table id="todos" class="table table-hover table-striped table-bordered responsive nowrap" data-source="<%= todos_path(format: :json) %>">
+  <tfoot>
+    <tr>
+      <th>#</th>
+      <th>Titulo</th>
+      <th>Descrição</th>
+      <th>Status</th>
+      <th>Items</th>
+      <th>Criado em</th>
+      <th>Atualizado em</th>
+      <th>Acões</th>
+    </tr>
   </table>
-  <%= link_to 'New Todo', new_todo_path, remote: true, class: 'btn btn-primary' %>
+  <%= link_to 'Adicionar Todo', new_todo_path, remote: true, class: 'btn btn-primary', id: 'new_todo' %>
 </div>
 
