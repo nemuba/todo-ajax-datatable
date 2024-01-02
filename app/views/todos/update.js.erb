@@ -4,36 +4,21 @@ $('turbolinks:load').ready(function() {
   <% if @todo.errors.empty? %>
 
     <!-- Fecha modal -->
-    App.closeModal();
+    App.Todo.closeModal();
   
     <!-- Recarrega o datatable -->
-    App.refreshDataTableAjax();
+    App.Todo.refreshDataTableAjax();
 
-    Toastify({
-      text: 'Atualizado com sucesso!',
-      duration: 3000,
-      gravity: 'top',
-      position: 'right',
-      backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
-      stopOnFocus: true,
-    }).showToast();
+    <!-- Exibe mensagem de sucesso -->
+    Toast.success('Atualizado com sucesso!');
 
   <!-- Senão recarrega o modal com os erros -->
   <% else %>
-    <!-- Fecha o modal -->
-    App.closeModal();
+    <!-- Renderiza os erros -->
+    App.Todo.render_errors('<%= j render 'errors', todo: @todo %>')
 
-    <!-- Recarrega o modal com os erros -->
-    App.renderModal('<%= j render("shared/modal", modal_title: 'Edit Todo') { render("form", todo: @todo ) } %>');
-
-     Toastify({
-      text: 'Preencha todos os campos !',
-      duration: 3000,
-      gravity: 'top',
-      position: 'right',
-      backgroundColor: 'linear-gradient(to right, #ff5f6d, #ffc371)',
-      stopOnFocus: true,
-    }).showToast();
+    <!-- Exibe mensagem de erro -->
+    Toast.error('Preencha todos os campos!');
   <% end %>
 });
 

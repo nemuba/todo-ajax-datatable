@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class TodosController < ApplicationController
+  include ExportDocument
+
+  skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_todo, only: %i[show edit update destroy]
 
   # GET /todos or /todos.json
@@ -8,16 +11,10 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: TodoDatatable.new(params, view_context: view_context) }
-      format.csv { send_data Todo.to_csv, filename: "todos_#{Date.today}.csv" }
-      format.pdf do
-        render pdf: 'Todos',
-               locals: { todos: Todo.all },
-               page_size: 'A4',
-               template: 'todos/pdf.html.erb',
-               layout: 'pdf.html.erb',
-               orientation: 'Landscape',
-               encoding: 'UTF-8'
-      end
+      format.csv { send_data Todo.to_csv, filename: "todos_#{Time.zone.today}.csv" }
+      format.pdf { send_data template_render({ pdf: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.pdf" }
+      format.docx { send_data template_render({ docx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.docx" }
+      format.xlsx { send_data template_render({ xlsx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.xlsx" }
     end
   end
 
@@ -81,6 +78,10 @@ class TodosController < ApplicationController
     end
   end
 
+  def import
+    TodoService.import(params[:file])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -98,6 +99,6 @@ class TodosController < ApplicationController
         :done, {
           items_attributes: %I[id description status _destroy]
         }
-    )
+      )
   end
 end

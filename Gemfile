@@ -17,6 +17,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+gem 'actioncable', '~> 5.2'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -56,13 +57,14 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'ajax-datatables-rails'
 gem 'bootstrap', '~> 4.3.1'
+gem 'cocoon'
+gem 'draper'
+gem 'font-awesome-sass', '~> 6.5.1'
+gem 'jquery-datatables'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-datatables'
-gem 'ajax-datatables-rails'
-gem 'draper'
-gem 'cocoon'
-gem "font-awesome-sass", "~> 6.5.1"
+gem 'rails-i18n'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

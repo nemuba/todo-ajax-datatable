@@ -29,9 +29,9 @@
 $.extend($.fn.dataTable.defaults, {
   responsive: true,
   pagingType: 'full',
-  //dom: "<'row'<'col-sm-4 text-left'f><'right-action col-sm-8 text-right'<'buttons'B> <'select-info'> >>" +
-  //  "<'row'<'dttb col-12 px-0'tr>>" +
-  //  "<'row'<'col-sm-12 table-footer'lip>>"
+  dom: "<'row'<'col-sm-4 text-left'f><'right-action col-sm-8 text-right'<'buttons'B> <'select-info'> >>" +
+    "<'row'<'dttb col-12 px-0'tr>>" +
+    "<'row'<'col-sm-12 table-footer'lip>>"
 });
 
 
@@ -79,15 +79,21 @@ $.fn.dataTable.ext.buttons.print = {
     class: 'btn btn-primary'
   },
   action: function (e, dt, node, config) {
-    $('.dt-buttons').hide();
-    $('#todos_filter').hide();
-    $('a#new_todo').hide();
-    $('#todos tfoot').hide();
+    App.hideComponents([
+      '.dt-buttons',
+      '#todos_filter',
+      'a#new_todo',
+      '#todos tfoot',
+      '#todos_paginate'
+    ]);
     window.print();
-    $('.dt-buttons').show();
-    $('#todos_filter').show();
-    $('a#new_todo').show();
-    $('#todos tfoot').show();
+    App.showComponents([
+      '.dt-buttons',
+      '#todos_filter',
+      'a#new_todo',
+      '#todos tfoot',
+      '#todos_paginate'
+    ]);
   }
 };
 
@@ -111,6 +117,30 @@ $.fn.dataTable.ext.buttons.export_pdf = {
   action: function (e, dt, node, config) {
     var url = dt.ajax.url()
     url = url.replace('.json', '.pdf')
+    window.open(url)
+  }
+};
+
+$.fn.dataTable.ext.buttons.export_docx = {
+  text: 'DOCX<i class="fa-solid fa-download"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    var url = dt.ajax.url()
+    url = url.replace('.json', '.docx')
+    window.open(url)
+  }
+};
+
+$.fn.dataTable.ext.buttons.export_xlsx = {
+  text: 'XLSX<i class="fa-solid fa-download"></i>',
+  attr: {
+    class: 'btn btn-primary'
+  },
+  action: function (e, dt, node, config) {
+    var url = dt.ajax.url()
+    url = url.replace('.json', '.xlsx')
     window.open(url)
   }
 };
@@ -139,38 +169,9 @@ $.fn.dataTable.ext.buttons.delete_all = {
   },
   action: function (e, dt, node, config) {
     var ids = dt.rows({ selected: true }).ids().toArray();
-    if (ids.length == 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Nenhum registro selecionado!'
-      })
-      return;
-    }
+    var url = dt.ajax.url()
+    url = url.replace('.json', '/delete_all.js')
 
-    Swal.fire({
-      title: 'Você tem certeza?',
-      text: "Você não poderá reverter isso!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sim, delete!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        var url = dt.ajax.url()
-        url = url.replace('.json', '/delete_all.js')
-        $.ajax({
-          url: url,
-          type: 'DELETE',
-          data: { ids: ids },
-          success: function (data) {
-            dt.ajax.reload();
-            $('.select-all').removeClass('btn-secondary');
-          }
-        });
-      }
-    })
+    App.Todo.delete_all(url, ids)
   }
 };

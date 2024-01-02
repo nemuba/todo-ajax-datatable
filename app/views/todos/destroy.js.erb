@@ -1,14 +1,9 @@
 $('turbolinks:load').ready(function() {
-  App.refreshDataTableAjax();
+  <!-- Atualiza a tabela -->
+  App.Todo.refreshDataTableAjax();
 
-  Toastify({
-    text: "Removido com sucesso!",
-    duration: 5000,
-    gravity: "top",
-    position: "right",
-    backgroundColor: "linear-gradient(to right, #ff0000, #ff0000)",
-    stopOnFocus: true,
-  }).showToast();
+  <!-- Exibe mensagem de sucesso -->
+  Toast.success('Removido com sucesso!');
 });
 
 

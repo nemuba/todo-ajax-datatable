@@ -1,7 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+
+
+
 <div class="container">
   <h1>Todos</h1>
+</div>
+
+<!-- Add form to import todos via file CSV -->
+<div class="container">
+  <%= form_tag import_todos_path, multipart: true, id: 'import_todo', remote: true do %>
+    <%= file_field_tag :file, accept: '.csv', label: 'Arquivo CSV' %>
+    <%= submit_tag "Importar" %>
+  <% end %>
 </div>
 
 <div id="new_todo" class="container mb-3">
@@ -22,6 +33,24 @@
       <th>Acões</th>
     </tr>
   </table>
-  <%= link_to 'Adicionar Todo', new_todo_path, remote: true, class: 'btn btn-primary', id: 'new_todo' %>
+  <%= link_to new_todo_path, remote: true, class: 'btn btn-primary', id: 'new_todo' do %>
+    <%= icon_solid {'fa-plus'} %> Novo
+  <% end %>
 </div>
 
+<script>
+$('#import_todo').on('submit', function(e) {
+  e.preventDefault();
+  
+  var form = $(this);
+
+  if(form.find('input[type="file"]').val() == '') {
+    Toast.error('Selecione um arquivo para importar');
+    form[0].reset();
+    $('input[type="submit"]').prop('disabled', false);
+    return false;
+  }else{
+    App.Todo.import(form, this);
+  }
+});
+</script>

@@ -10,20 +10,13 @@
 
 <p>
   <strong>Done:</strong>
-  <%= check_box_tag :done, 'yes', todo.done, disabled: true %>
+  <%= todo.done ? icon_solid { 'fa-check' } : icon_regular { 'fa-square' } %>
 </p>
 
 <h4>Items: <%= todo.items.size %></h4>
 
+<ul>
 <% todo.items.each do |item| %>
-  <p>
-    <strong>Description:</strong>
-    <%= item.description %>
-  </p>
-
-  <p>
-    <strong>Status:</strong>
-    <%= check_box_tag :status, 'yes', item.status, disabled: true %>
-  </p>
+  <li><%= item.description %> | <%= item.status ? icon_solid { 'fa-check' } : icon_regular { 'fa-square' } %></li>
 <% end %>
-
+</ul>

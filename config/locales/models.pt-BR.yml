@@ -1,0 +1,21 @@
+'pt-BR':
+  activerecord:
+    models:
+      todo: Tarefa
+      item: Item
+    attributes:
+      todo:
+        id: ID
+        title: Título
+        description: Descrição
+        done: Feito
+        created_at: Criado em
+        updated_at: Atualizado em
+      item:
+        id: ID
+        description: Descrição
+        status: Feito
+        todo_id: Tarefa
+        created_at: Criado em
+        updated_at: Atualizado em
+

@@ -1,0 +1,9 @@
+<div class="form-group">
+  <h2 class="text-danger"><%= t('errors.form', count: todo.errors.count) %></h2>
+
+  <ul class="list-group">
+  <% todo.errors.full_messages.each do |message| %>
+    <li class="list-group-item list-group-item-danger"><%= message %></li>
+  <% end %>
+  </ul>
+</div>
