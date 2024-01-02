@@ -1,24 +1,29 @@
-# README
+# TODO APP
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Description
 
-Things you may want to cover:
+This is a simple todo app that allows you to add, edit, and delete tasks. It also allows you to mark tasks as complete.
 
-* Ruby version
+## Setup
 
-* System dependencies
+### Requirements
 
-* Configuration
+* Ruby
+* Rails
+* Postgres
+* Cocoon gem
+* ajax-datatables-rails gem
+* jquery-datatables-rails gem
+* jquery-rails gem
+* wicked_pdf gem
+* font-awesome-rails gem
+* bootstrap gem
+* drapper gem
 
-* Database creation
+## Installation
 
-* Database initialization
+1. Clone the repository
+2. Run `bundle install`
+3. Run `rake db:migrate`
+4. Run `rails s`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
