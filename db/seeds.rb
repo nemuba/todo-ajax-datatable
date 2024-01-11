@@ -6,3 +6,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+(1..10_000).to_a.each do |i|
+  Todo.create(
+    title: Faker::Lorem.paragraph(sentence_count: 1),
+    description: Faker::Lorem.paragraph(sentence_count: 2),
+    done: [true, false].sample
+  )
+end

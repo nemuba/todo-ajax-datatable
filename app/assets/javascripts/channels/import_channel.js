@@ -9,7 +9,7 @@ App.import_channel = App.cable.subscriptions.create("ImportChannel", {
   },
 
   received: function (data) {
-    Toast.success(data.message);
+    Toast[data.type](data.message)
     App.Todo.refreshDataTableAjax()
   }
 });

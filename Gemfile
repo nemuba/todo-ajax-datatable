@@ -59,6 +59,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'ajax-datatables-rails'
 gem 'bootstrap', '~> 4.3.1'
+gem 'flag-icons-rails'
 gem 'cocoon'
 gem 'draper'
 gem 'font-awesome-sass', '~> 6.5.1'
@@ -68,3 +69,6 @@ gem 'jquery-ui-rails'
 gem 'rails-i18n'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+gem 'material_icons'
+gem 'faker'

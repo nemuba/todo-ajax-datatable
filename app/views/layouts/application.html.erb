@@ -11,8 +11,15 @@
   </head>
 
   <body>
-    <div class="container">
-      <%= yield %>
+    <div class="container-scroller">
+      <%= render 'shared/sidebar' %>
+
+      <div class="container-fluid page-body-wrapper">
+        <%= render 'shared/navbar' %>
+        <div class="container-fluid" style="margin-top: 80px !important">
+          <%= yield %>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

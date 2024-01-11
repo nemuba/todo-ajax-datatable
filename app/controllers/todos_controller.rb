@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   include ExportDocument
 
   skip_before_action :verify_authenticity_token, only: %i[import]
-  before_action :set_todo, only: %i[show edit update destroy]
+  before_action :set_todo, only: %i[show edit update destroy clone]
 
   # GET /todos or /todos.json
   def index
@@ -12,9 +12,9 @@ class TodosController < ApplicationController
       format.html
       format.json { render json: TodoDatatable.new(params, view_context: view_context) }
       format.csv { send_data Todo.to_csv, filename: "todos_#{Time.zone.today}.csv" }
-      format.pdf { send_data template_render({ pdf: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.pdf" }
-      format.docx { send_data template_render({ docx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.docx" }
-      format.xlsx { send_data template_render({ xlsx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: "todos_#{Time.zone.today}.xlsx" }
+      format.pdf { send_data template_render({ pdf: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('pdf') }
+      format.docx { send_data template_render({ docx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('docx') }
+      format.xlsx { send_data template_render({ xlsx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('xlsx') }
     end
   end
 
@@ -82,7 +82,17 @@ class TodosController < ApplicationController
     TodoService.import(params[:file])
   end
 
+  def clone
+    @items = @todo.items.map(&:dup)
+    @todo = @todo.dup
+    @todo.items = @items
+  end
+
   private
+
+  def filename(format_type)
+    "todos_#{Time.zone.today}.#{format_type}"
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_todo

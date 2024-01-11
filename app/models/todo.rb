@@ -2,6 +2,7 @@
 
 class Todo < ApplicationRecord
   extend ExportCsv
+  extend ReadCsv
 
   validates :title, :description, presence: true
 

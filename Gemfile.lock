@@ -81,7 +81,11 @@ GEM
       ruby2_keywords
     erubi (1.12.0)
     execjs (2.9.1)
+    faker (2.22.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
+    flag-icons-rails (3.4.6.1)
+      sass-rails
     font-awesome-sass (6.5.1)
       sassc (~> 2.0)
     globalid (1.1.0)
@@ -112,6 +116,8 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.2)
+    material_icons (4.0.0)
+      railties (>= 3.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
@@ -265,12 +271,15 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.2)
   draper
+  faker
+  flag-icons-rails
   font-awesome-sass (~> 6.5.1)
   jbuilder (~> 2.5)
   jquery-datatables
   jquery-rails
   jquery-ui-rails
   listen (>= 3.0.5, < 3.2)
+  material_icons
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.3)

@@ -35,3 +35,19 @@
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
   border: 1px solid #007bff !important;
 }
+
+.dataTables_info,
+.dataTables_filter,
+.dataTables_length {
+  color: white !important;
+}
+
+.dataTable tbody td {
+  color: #fff;
+  background-color: #000;
+}
+
+.dataTable tbody tr.selected td {
+  background-color: #007bff !important;
+  color: #fff;
+}

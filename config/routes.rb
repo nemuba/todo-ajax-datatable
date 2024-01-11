@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :todos do
     delete 'delete_all', on: :collection
     post 'import', on: :collection
+    get 'clone', on: :member
   end
 
   get 'home/welcome'

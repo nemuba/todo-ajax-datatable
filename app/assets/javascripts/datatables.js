@@ -29,9 +29,7 @@
 $.extend($.fn.dataTable.defaults, {
   responsive: true,
   pagingType: 'full',
-  dom: "<'row'<'col-sm-4 text-left'f><'right-action col-sm-8 text-right'<'buttons'B> <'select-info'> >>" +
-    "<'row'<'dttb col-12 px-0'tr>>" +
-    "<'row'<'col-sm-12 table-footer'lip>>"
+  dom: "Bfrtip",
 });
 
 
@@ -70,6 +68,7 @@ $.fn.dataTable.ext.buttons.reload = {
   },
   action: function (e, dt, node, config) {
     dt.ajax.reload();
+    Toast.info('Tabela atualizada')
   }
 };
 
@@ -175,3 +174,13 @@ $.fn.dataTable.ext.buttons.delete_all = {
     App.Todo.delete_all(url, ids)
   }
 };
+
+$('turbolinks:load', function () {
+  $('.dataTables_filter input[type="search"]').addClass('form-control');
+  $('.dataTables_filter input[type="search"]').removeClass('form-control-sm');
+
+});
+
+$('.dataTables_paginate .pagination .paginate_button').each(function () {
+  $(this).addClass('btn btn-sm btn-outline-primary');
+});
