@@ -134,7 +134,7 @@ $(document).on('turbolinks:load', function () {
     columnDefs: [
       { orderable: false, targets: [4, 7] },
       { searchable: false, targets: [4, 7] },
-      { className: 'text-center', targets: [0, 4, 5, 6, 7] }
+      { className: 'text-center', targets: [0, 3, 4, 5, 6, 7] }
     ],
     language: {
       search: 'Pesquisar:',
@@ -174,7 +174,11 @@ $(document).on('turbolinks:load', function () {
   $('#todos tfoot th').each(function (i) {
     var title = $('#todos thead th').eq($(this).index()).text();
 
-    $(this).html('<input class="form-control m-0" type="text" placeholder="' + title + '" data-index="' + i + '" />');
+    if (!['#', 'Ações'].includes(title)) {
+      $(this).html('<input class="form-control" type="search" placeholder="' + title + '" data-index="' + i + '" />');
+    } else {
+      $(this).html('<span class="text-white" data-index="' + i + '">' + title + '</span>');
+    }
   });
 
   // Filter event handler

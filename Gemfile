@@ -57,18 +57,19 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'activerecord-import'
 gem 'ajax-datatables-rails'
 gem 'bootstrap', '~> 4.3.1'
-gem 'flag-icons-rails'
 gem 'cocoon'
 gem 'draper'
+gem 'faker'
+gem 'flag-icons-rails'
 gem 'font-awesome-sass', '~> 6.5.1'
 gem 'jquery-datatables'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'material_icons'
 gem 'rails-i18n'
+gem 'sidekiq'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
-gem 'material_icons'
-gem 'faker'

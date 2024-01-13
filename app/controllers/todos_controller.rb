@@ -3,7 +3,6 @@
 class TodosController < ApplicationController
   include ExportDocument
 
-  skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_todo, only: %i[show edit update destroy clone]
 
   # GET /todos or /todos.json
@@ -11,10 +10,10 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: TodoDatatable.new(params, view_context: view_context) }
-      format.csv { send_data Todo.to_csv, filename: "todos_#{Time.zone.today}.csv" }
-      format.pdf { send_data template_render({ pdf: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('pdf') }
-      format.docx { send_data template_render({ docx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('docx') }
-      format.xlsx { send_data template_render({ xlsx: 'Todos' }, { todos: Todo.includes(:items).all }), filename: filename('xlsx') }
+      format.csv { send_data Todo.to_csv, filename: filename('csv') }
+      format.pdf { render_data(:pdf) }
+      format.docx { render_data(:docx) }
+      format.xlsx { render_data(:xlsx) }
     end
   end
 
@@ -71,7 +70,8 @@ class TodosController < ApplicationController
   end
 
   def delete_all
-    Todo.where(id: params[:ids]).destroy_all
+    DeleteAllJob.perform_later(params[:ids])
+
     respond_to do |format|
       format.js
       format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
@@ -90,13 +90,9 @@ class TodosController < ApplicationController
 
   private
 
-  def filename(format_type)
-    "todos_#{Time.zone.today}.#{format_type}"
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_todo
-    @todo = Todo.eager_load(:items).find(params[:id])
+    @todo = Todo.includes(:items).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

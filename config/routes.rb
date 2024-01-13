@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
   mount ActionCable.server => '/cable'
 
   resources :todos do
@@ -9,5 +12,5 @@ Rails.application.routes.draw do
     get 'clone', on: :member
   end
 
-  get 'home/welcome'
+  root 'todos#index'
 end

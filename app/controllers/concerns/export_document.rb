@@ -11,7 +11,7 @@ module ExportDocument
       template: template,
       layout: 'pdf.html.erb',
       locals: locals,
-      orientation:'Landscape',
+      orientation: 'Landscape',
       encoding: 'UTF-8'
     )
   end

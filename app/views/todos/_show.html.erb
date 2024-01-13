@@ -15,8 +15,19 @@
 
 <h4>Items: <%= todo.items.size %></h4>
 
-<ul>
-<% todo.items.each do |item| %>
-  <li><%= item.description %> | <%= item.status ? icon_solid { 'fa-check' } : icon_regular { 'fa-square' } %></li>
-<% end %>
-</ul>
+<table class="table responsive nowrap table-dark bg-dark text-white">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% todo.items.each do |item| %>
+      <tr>
+        <td><%= item.description %></td>
+        <td><%= item.status ? icon_solid('text-success') { 'fa-check' } : icon_regular('text-white') { 'fa-square' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

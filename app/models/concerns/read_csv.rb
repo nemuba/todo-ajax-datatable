@@ -22,7 +22,8 @@ module ReadCsv
   def csv_valid?(file)
     return true if file_valid?(file) && format_valid?(file)
 
-    ActionCable.server.broadcast('import_channel', message: 'Arquivo inválido, verifique formato(.csv) e os campos', type: 'error')
+    ActionCable.server.broadcast('import_channel', message: 'Arquivo inválido, verifique formato(.csv) e os campos',
+                                                   type: 'error')
 
     false
   end

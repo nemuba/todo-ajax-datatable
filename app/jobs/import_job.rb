@@ -10,7 +10,7 @@ class ImportJob < ApplicationJob
 
     if list.any?
       Todo.transaction do
-        Todo.create(list.map(&:attributes))
+        Todo.import(list)
       rescue StandardError => e
         import_channel("Erro ao importar: #{e.message}", 'error')
       end

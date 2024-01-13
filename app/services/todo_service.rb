@@ -3,10 +3,13 @@
 class TodoService
   class << self
     def import(tempfile)
-      file_path = Rails.root.join('tmp/import.csv')
-      File.open(file_path.to_path, 'wb') { |file| file.write(tempfile.read) }
+      File.open(file_path, 'wb') { |file| file.write(tempfile.read) }
 
-      ImportJob.perform_later(file_path.to_path)
+      ImportJob.perform_later(file_path)
+    end
+
+    def file_path
+      Rails.root.join('tmp/import.csv').to_path
     end
   end
 end

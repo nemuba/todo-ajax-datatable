@@ -2,12 +2,18 @@
 
 # TodoDecorator
 class TodoDecorator < ApplicationDecorator
+  def done
+    icon = object.done ? h.icon_solid { 'fa-check' } : h.icon_solid { 'fa-times' }
+
+    h.content_tag(:span, icon, class: "badge badge-#{object.done ? 'success' : 'danger'} badge-pill")
+  end
+
   def created_at
-    object.created_at.strftime('%d/%m/%Y')
+    to_format(object.created_at, '%d/%m/%Y')
   end
 
   def updated_at
-    object.updated_at.strftime('%d/%m/%Y')
+    to_format(object.updated_at, '%d/%m/%Y')
   end
 
   def dt_actions
@@ -17,45 +23,18 @@ class TodoDecorator < ApplicationDecorator
   private
 
   def btn_show
-    h.link_to(
-      h.icon_solid { 'fa-search' },
-      h.todo_path(object),
-      remote: true,
-      class: 'btn btn-sm btn-primary',
-      data: { toggle: 'tooltip', placement: 'top' },
-      title: 'Visualizar'
-    ).html_safe
+    link_show(link: h.todo_path(object), title: 'Visualizar', icon: 'fa-search', remote: true)
   end
 
   def btn_edit
-    h.link_to(
-      h.icon_solid { 'fa-pencil' },
-      h.edit_todo_path(object),
-      remote: true,
-      class: 'btn btn-sm btn-success',
-      data: { toggle: 'tooltip', placement: 'top' },
-      title: 'Editar'
-    ).html_safe
+    link_edit(link: h.edit_todo_path(object), title: 'Editar', icon: 'fa-pencil', remote: true)
   end
 
   def btn_destroy
-    h.button_tag(
-      h.icon_solid { 'fa-trash' },
-      class: 'btn btn-sm btn-danger',
-      onClick: 'App.Todo.destroy(this)',
-      data: { method: :delete, source: h.todo_path(object), toggle: 'tooltip', placement: 'top'},
-      title: 'Excluir'
-    ).html_safe
+    link_destroy(link: h.todo_path(object), title: 'Excluir', icon: 'fa-trash', onClick: 'App.Todo.destroy(this)')
   end
 
   def btn_clone
-    h.link_to(
-      h.icon_solid { 'fa-refresh' },
-      h.clone_todo_path(object),
-      remote: true,
-      class: 'btn btn-sm btn-info',
-      data: { toggle: 'tooltip', placement: 'top' },
-      title: 'Clonar'
-    ).html_safe
+    link_clone(link: h.clone_todo_path(object), title: 'Clonar', icon: 'fa-refresh', remote: true)
   end
 end
