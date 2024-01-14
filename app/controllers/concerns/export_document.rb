@@ -15,4 +15,12 @@ module ExportDocument
       encoding: 'UTF-8'
     )
   end
+
+  def render_data(format, locals = {})
+    send_data(template_render({ format => 'Todos' }, locals), filename: filename(format))
+  end
+
+  def filename(format_type)
+    "todos_#{Time.zone.today}.#{format_type}"
+  end
 end

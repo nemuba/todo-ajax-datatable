@@ -3,7 +3,7 @@
 class TodoDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :edit_todo_path
+  def_delegators :@view
 
   def initialize(params, opts = {})
     @view = opts[:view_context]

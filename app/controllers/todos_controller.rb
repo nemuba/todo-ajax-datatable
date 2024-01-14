@@ -11,9 +11,9 @@ class TodosController < ApplicationController
       format.html
       format.json { render json: TodoDatatable.new(params, view_context: view_context) }
       format.csv { send_data Todo.to_csv, filename: filename('csv') }
-      format.pdf { render_data(:pdf) }
-      format.docx { render_data(:docx) }
-      format.xlsx { render_data(:xlsx) }
+      format.pdf { render_data(:pdf, { todos: Todo.includes(:items).all }) }
+      format.docx { render_data(:docx, { todos: Todo.includes(:items).all }) }
+      format.xlsx { render_data(:xlsx, { todos: Todo.includes(:items).all }) }
     end
   end
 

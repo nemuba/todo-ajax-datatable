@@ -1,5 +1,5 @@
 
 $('turbolinks:load').ready( function() {
   <!-- Carrega o modal -->
-  App.Todo.renderModal('<%= j render("shared/modal", modal_title: 'Editar Todo') { render("form", todo: @todo ) } %>');
+  App.Todo.renderModal('Editar Todo', "<%=j render 'form', todo: @todo %>");
 });

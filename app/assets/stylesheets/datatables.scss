@@ -51,3 +51,20 @@
   background-color: #007bff !important;
   color: #fff;
 }
+
+.page-link {
+  color: #000aff !important;
+  background-color: #fff !important;
+
+  &:hover {
+    color: #fff !important;
+    background-color: #007bff !important;
+  }
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff !important;
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+}

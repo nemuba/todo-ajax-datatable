@@ -12,25 +12,38 @@
     <%= form.text_field :description, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :done, class: 'form-label' %>
-    <%= form.check_box :done %>
+  <div class="form-group form-check">
+    <%= form.check_box :done, class: 'form-check-input' %>
+    <%= form.label :done, class: 'form-check-label' %>
   </div>
 
   <div id="items">
-    <h4 id="items-count">Items: <%= form.object.items.size %></h4>
+    <div class="d-flex justify-content-between">
+      <h3 id="items-count">Items: <%= form.object.items.size %></h3>
+      <%= link_to_add_association form, 
+                                  :items,
+                                  class: 'btn btn-sm btn-primary m-3',
+                                  data: {
+                                    association_insertion_node: '#items',
+                                    association_insertion_method: 'append',
+                                    association: 'items',
+                                  } do %>
+        <%= icon_solid { 'fa-plus' } %> Adiciona Item
+      <% end %>
+    </div>
+
     <%= form.fields_for :items do |item| %>
       <%= render 'item_fields', f: item %>
     <% end %>
-    <div class="row justify-content-end mr-2">
-      <%= link_to_add_association form, :items, class: 'btn btn-sm btn-primary mb-2' do %>
-        Adiciona Item <%= icon_solid { 'fa-plus' } %>
-      <% end %>
-    </div>
   </div>
 
-  <div class="row justify-content-start">
-    <%= form.submit nil, class: 'btn btn-sm btn-primary ml-3' %>
+  <div class="d-flex justify-content-between m-1">
+    <button type="submit" class="btn btn-sm btn-success" data-disable-with="Salvando...">
+      <%= icon_solid { 'fa-save' } %> Salvar
+    </button>
+    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
+      <%= icon_solid { 'fa-times' } %> Fechar
+    </button>
   </div>
 <% end %>
 

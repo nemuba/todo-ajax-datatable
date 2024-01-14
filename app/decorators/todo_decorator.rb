@@ -17,7 +17,9 @@ class TodoDecorator < ApplicationDecorator
   end
 
   def dt_actions
-    [btn_clone, btn_show, btn_edit, btn_destroy].join(' ').html_safe
+    h.content_tag(:div, class: 'btn-group') do
+      [btn_clone, btn_show, btn_edit, btn_destroy].join(' ').html_safe
+    end.html_safe
   end
 
   private

@@ -64,7 +64,10 @@ $(document).on('turbolinks:before-cache', function () {
 $.fn.dataTable.ext.buttons.reload = {
   text: '<i class="fa-solid fa-rotate-right"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Atualizar'
   },
   action: function (e, dt, node, config) {
     dt.ajax.reload();
@@ -75,7 +78,10 @@ $.fn.dataTable.ext.buttons.reload = {
 $.fn.dataTable.ext.buttons.print = {
   text: '<i class="fa-solid fa-print"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Imprimir'
   },
   action: function (e, dt, node, config) {
     App.hideComponents([
@@ -83,15 +89,19 @@ $.fn.dataTable.ext.buttons.print = {
       '#todos_filter',
       'a#new_todo',
       '#todos tfoot',
-      '#todos_paginate'
+      '#todos_paginate',
+      '#navbar',
+      '#sidebar'
     ]);
-    window.print();
+    window.print({ landscape: true })
     App.showComponents([
       '.dt-buttons',
       '#todos_filter',
       'a#new_todo',
       '#todos tfoot',
-      '#todos_paginate'
+      '#todos_paginate',
+      '#navbar',
+      '#sidebar'
     ]);
   }
 };
@@ -99,7 +109,10 @@ $.fn.dataTable.ext.buttons.print = {
 $.fn.dataTable.ext.buttons.export_csv = {
   text: 'CSV<i class="fa-solid fa-download"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Exportar para CSV'
   },
   action: function (e, dt, node, config) {
     var url = dt.ajax.url()
@@ -111,7 +124,10 @@ $.fn.dataTable.ext.buttons.export_csv = {
 $.fn.dataTable.ext.buttons.export_pdf = {
   text: 'PDF<i class="fa-solid fa-download"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Exportar para PDF'
   },
   action: function (e, dt, node, config) {
     var url = dt.ajax.url()
@@ -123,7 +139,10 @@ $.fn.dataTable.ext.buttons.export_pdf = {
 $.fn.dataTable.ext.buttons.export_docx = {
   text: 'DOCX<i class="fa-solid fa-download"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Exportar para DOCX'
   },
   action: function (e, dt, node, config) {
     var url = dt.ajax.url()
@@ -135,7 +154,10 @@ $.fn.dataTable.ext.buttons.export_docx = {
 $.fn.dataTable.ext.buttons.export_xlsx = {
   text: 'XLSX<i class="fa-solid fa-download"></i>',
   attr: {
-    class: 'btn btn-primary'
+    class: 'btn btn-primary',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Exportar para XLSX'
   },
   action: function (e, dt, node, config) {
     var url = dt.ajax.url()
@@ -147,7 +169,10 @@ $.fn.dataTable.ext.buttons.export_xlsx = {
 $.fn.dataTable.ext.buttons.select_all = {
   text: '<i class="fa-solid fa-check"></i>',
   attr: {
-    class: 'btn btn-primary select-all'
+    class: 'btn btn-primary select-all',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Selecionar todos'
   },
   action: function (e, dt, node, config) {
     if (dt.rows({ selected: true }).count() == dt.rows().count()) {
@@ -164,7 +189,10 @@ $.fn.dataTable.ext.buttons.select_all = {
 $.fn.dataTable.ext.buttons.delete_all = {
   text: 'Deletar em lote <i class="fa-solid fa-file"></i>',
   attr: {
-    class: 'btn btn-danger'
+    class: 'btn btn-danger',
+    'data-toggle': 'tooltip',
+    'data-placement': 'top',
+    title: 'Deletar selecionados'
   },
   action: function (e, dt, node, config) {
     var ids = dt.rows({ selected: true }).ids().toArray();
@@ -182,5 +210,5 @@ $('turbolinks:load', function () {
 });
 
 $('.dataTables_paginate .pagination .paginate_button').each(function () {
-  $(this).addClass('btn btn-sm btn-outline-primary');
+  $(this).addClass('btn btn-sm btn-primary');
 });

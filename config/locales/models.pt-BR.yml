@@ -11,6 +11,8 @@
         done: Feito
         created_at: Criado em
         updated_at: Atualizado em
+        items_attributes:
+          description: Descrição
       item:
         id: ID
         description: Descrição

@@ -2,9 +2,22 @@ $(document).on('turbolinks:load', function () {
   const App = window.App || {};
 
   App.Todo = {
+    validation: () => {
+      $('#modal .form-control').filter(function () {
+        return ($(this).val() == '');
+      }).first().focus();
+      $('#modal .form-control').each(function () {
+        if ($(this).val() == '') {
+          $(this).addClass('is-invalid');
+        } else {
+          $(this).removeClass('is-invalid');
+        }
+      });
+    },
     render_errors: (partial) => {
-      $('#todo_errors').html('');
-      $('#todo_errors').append(partial);
+      $('#modal #todo_errors').html('');
+      $('#modal #todo_errors').append(partial);
+      App.Todo.validation();
     },
     destroy: (e) => {
       Swal.fire({
@@ -32,7 +45,7 @@ $(document).on('turbolinks:load', function () {
         Swal.fire({
           icon: 'warning',
           title: 'Oops...',
-          text: 'Nenhum registro selecionado!'
+          text: 'Nenhum registro selecionado!',
         })
         return;
       }
@@ -59,14 +72,15 @@ $(document).on('turbolinks:load', function () {
         }
       })
     },
-    renderModal: (partial) => {
-      $('#new_todo').html('');
-      $('#new_todo').append(partial);
+    renderModal: (title, partial) => {
+      $('#modal-title').html(title);
+      $('#modal-body').html(partial);
       $('#modal').modal('show');
     },
     closeModal: () => {
+      $('#modal-title').html('');
+      $('#modal-body').html('');
       $('#modal').modal('hide');
-      $('#new_todo').html('');
     },
     refreshDataTableAjax: () => {
       $('#todos').DataTable().ajax.reload();
@@ -174,10 +188,10 @@ $(document).on('turbolinks:load', function () {
   $('#todos tfoot th').each(function (i) {
     var title = $('#todos thead th').eq($(this).index()).text();
 
-    if (!['#', 'Ações'].includes(title)) {
+    if (!['#', 'Ações', 'Items'].includes(title)) {
       $(this).html('<input class="form-control" type="search" placeholder="' + title + '" data-index="' + i + '" />');
     } else {
-      $(this).html('<span class="text-white" data-index="' + i + '">' + title + '</span>');
+      $(this).html('<span class="text-white" data-index="' + i + '"></span>');
     }
   });
 
