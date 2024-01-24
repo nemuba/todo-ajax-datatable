@@ -74,12 +74,12 @@ $(document).on('turbolinks:load', function () {
     },
     renderModal: (title, partial) => {
       $('#modal-title').html(title);
-      $('#modal-body').html(partial);
+      $(partial).appendTo('#modal-content');
       $('#modal').modal('show');
     },
     closeModal: () => {
-      $('#modal-title').html('');
-      $('#modal-body').html('');
+      $('#modal #modal-title').html('');
+      $('#modal #todo_form').remove();
       $('#modal').modal('hide');
     },
     refreshDataTableAjax: () => {

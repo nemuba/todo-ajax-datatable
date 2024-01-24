@@ -1,4 +1,5 @@
-'pt-BR':
+---
+pt-BR:
   activerecord:
     models:
       todo: Tarefa
@@ -13,6 +14,7 @@
         updated_at: Atualizado em
         items_attributes:
           description: Descrição
+          done: Feito
       item:
         id: ID
         description: Descrição
