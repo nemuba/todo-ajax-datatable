@@ -36,19 +36,19 @@ class ApplicationDecorator < Draper::Decorator
     ).html_safe
   end
 
-  def link_show(link:, title:, icon:, remote: true)
+  def link_show(link:, title: 'Visualizar', icon: 'fa-search', remote: true)
     link(link: link, title: title, icon: icon, remote: remote, class_name: 'btn btn-sm btn-primary')
   end
 
-  def link_edit(link:, title:, icon:, remote: true)
+  def link_edit(link:, title: 'Editar', icon: 'fa-pencil', remote: true)
     link(link: link, title: title, icon: icon, remote: remote, class_name: 'btn btn-sm btn-success')
   end
 
-  def link_destroy(link:, title:, icon:, onClick:)
+  def link_destroy(link:, title: 'Excluir', icon: 'fa-trash', onClick:)
     button(link: link, title: title, icon: icon, remote: true, class_name: 'btn btn-sm btn-danger', onClick: onClick)
   end
 
-  def link_clone(link:, title:, icon:, remote: true)
+  def link_clone(link:, title: 'Clonar', icon: 'fa-refresh', remote: true)
     link(link: link, title: title, icon: icon, remote: remote, class_name: 'btn btn-sm btn-info')
   end
 end

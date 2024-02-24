@@ -17,37 +17,45 @@
 <div id="new_todo" class="container-scroller mb-3"></div>
 
 <div class="container-fluid">
-  <table id="todos" class="table table-bordered responsive nowrap table-dark bg-dark text-dark" data-source="<%= todos_path(format: :json) %>">
-  <tfoot>
-    <tr>
-      <th>#</th>
-      <th>Titulo</th>
-      <th>Descrição</th>
-      <th>Status</th>
-      <th>Items</th>
-      <th>Criado em</th>
-      <th>Atualizado em</th>
-      <th>Acões</th>
-    </tr>
-  </table>
+  <%= datatable_ajax(id: 'todos', url: todos_path(format: :json)) do %>
+    <tfoot>
+      <tr>
+        <th>#</th>
+        <th>Titulo</th>
+        <th>Descrição</th>
+        <th>Status</th>
+        <th>Items</th>
+        <th>Criado em</th>
+        <th>Atualizado em</th>
+        <th>Acões</th>
+      </tr>
+    </tfoot>
+  <% end %>
+
   <%= link_to new_todo_path, remote: true, class: 'btn btn-primary', id: 'new_todo' do %>
     <%= icon_solid {'fa-plus'} %> Criar TODO
   <% end %>
 </div>
 
-<script>
-$('#import_todo').on('submit', function(e) {
-  e.preventDefault();
-  
-  var form = $(this);
+<script type="text/javascript">
+  $(document).on('turbolinks:load', function() {
+    // Load table
+    App.Todo.load_table();
+  });
 
-  if(form.find('input[type="file"]').val() == '') {
-    Toast.error('Selecione um arquivo para importar');
-    form[0].reset();
-    $('input[type="submit"]').prop('disabled', false);
-    return false;
-  }else{
-    App.Todo.import(form, this);
-  }
-});
+  // Submit form to import todos
+  $('#import_todo').on('submit', function(e) {
+    e.preventDefault();
+    
+    var form = $(this);
+
+    if(form.find('input[type="file"]').val() == '') {
+      Toast.error('Selecione um arquivo para importar');
+      form[0].reset();
+      $('input[type="submit"]').prop('disabled', false);
+      return false;
+    }else{
+      App.Todo.import(form, this);
+    }
+  });
 </script>

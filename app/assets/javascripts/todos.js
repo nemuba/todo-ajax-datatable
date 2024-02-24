@@ -73,9 +73,9 @@ $(document).on('turbolinks:load', function () {
       })
     },
     renderModal: (title, partial) => {
+      $('#modal').modal('show');
       $('#modal-title').html(title);
       $(partial).appendTo('#modal-content');
-      $('#modal').modal('show');
     },
     closeModal: () => {
       $('#modal #modal-title').html('');
@@ -111,95 +111,97 @@ $(document).on('turbolinks:load', function () {
           $('input[type="submit"]').prop('disabled', false);
         }
       });
+    },
+    load_table: () => {
+      $('#todos').DataTable({
+        fixedHeader: true,
+        processing: true,
+        serverSide: true,
+        pageLength: 5,
+        pagingType: 'first_last_numbers',
+        ajax: { url: $('#todos').data('source') },
+        buttons: [
+          { extend: 'reload', className: 'btn btn-primary' },
+          { extend: 'print', className: 'btn btn-primary' },
+          { extend: 'export_csv', className: 'btn btn-primary' },
+          { extend: 'export_pdf', className: 'btn btn-primary' },
+          { extend: 'export_docx', className: 'btn btn-primary' },
+          { extend: 'export_xlsx', className: 'btn btn-primary' },
+          { extend: 'select_all', className: 'btn btn-primary' },
+          { extend: 'delete_all', className: 'btn btn-danger' },
+        ],
+        columns: [
+          { title: '#', data: 'id' },
+          { title: 'Título', data: 'title' },
+          { title: 'Descrição', data: 'description' },
+          { title: 'Status', data: 'done' },
+          { title: 'Items', data: 'items' },
+          { title: 'Criado em', data: 'created_at' },
+          { title: 'Atualizado em', data: 'updated_at' },
+          { title: 'Ações', data: "actions" }
+        ],
+        select: true,
+        order: [[0, 'desc']],
+        columnDefs: [
+          { orderable: false, targets: [4, 7] },
+          { searchable: false, targets: [4, 7] },
+          { className: 'text-center', targets: [0, 3, 4, 5, 6, 7] }
+        ],
+        language: {
+          search: 'Pesquisar:',
+          zeroRecords: 'Nenhum registro encontrado',
+          dom: '<"pull-left"f><"pull-right"l>tip',
+          decimal: "",
+          emptyTable: "Nenhum registro encontrado",
+          info: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+          infoEmpty: "Mostrando 0 até 0 de 0 registros",
+          infoFiltered: "(Filtrados de _MAX_ registros)",
+          infoPostFix: "",
+          thousands: ".",
+          lengthMenu: "Mostrar _MENU_ Registros",
+          loadingRecords: "Carregando...",
+          processing: "Processando...",
+          select: {
+            rows: {
+              _: "Selecionado %d linhas",
+              0: "Nenhuma linha selecionada",
+              1: "Selecionado 1 linha"
+            }
+          },
+          aria: {
+            sortAscending: ': ative para ordenar a coluna em ordem crescente',
+            sortDescending: ': ative para ordenar a coluna em ordem decrescente',
+          },
+          paginate: {
+            first: 'Primeiro',
+            last: 'Último',
+            next: 'Próximo',
+            previous: 'Anterior',
+          }
+        },
+      });
+
+      $('#todos tfoot th').each(function (i) {
+        var title = $('#todos thead th').eq($(this).index()).text();
+
+        if (!['#', 'Ações', 'Items'].includes(title)) {
+          $(this).html('<input class="form-control" type="search" placeholder="' + title + '" data-index="' + i + '" />');
+        } else {
+          $(this).html('<span class="text-white" data-index="' + i + '"></span>');
+        }
+      });
+
+      const table = $('#todos').DataTable();
+
+      // Filter event handler
+      $(table.table().container()).on('keyup', 'tfoot input', function () {
+        table
+          .column($(this).data('index'))
+          .search(this.value)
+          .draw();
+      });
     }
   }
 
   window.App = App;
-
-  var table = $('#todos').DataTable({
-    fixedHeader: true,
-    processing: true,
-    serverSide: true,
-    pageLength: 5,
-    pagingType: 'first_last_numbers',
-    ajax: { url: $('#todos').data('source') },
-    buttons: [
-      { extend: 'reload', className: 'btn btn-primary' },
-      { extend: 'print', className: 'btn btn-primary' },
-      { extend: 'export_csv', className: 'btn btn-primary' },
-      { extend: 'export_pdf', className: 'btn btn-primary' },
-      { extend: 'export_docx', className: 'btn btn-primary' },
-      { extend: 'export_xlsx', className: 'btn btn-primary' },
-      { extend: 'select_all', className: 'btn btn-primary' },
-      { extend: 'delete_all', className: 'btn btn-danger' },
-    ],
-    columns: [
-      { title: '#', data: 'id' },
-      { title: 'Título', data: 'title' },
-      { title: 'Descrição', data: 'description' },
-      { title: 'Status', data: 'done' },
-      { title: 'Items', data: 'items' },
-      { title: 'Criado em', data: 'created_at' },
-      { title: 'Atualizado em', data: 'updated_at' },
-      { title: 'Ações', data: "actions" }
-    ],
-    select: true,
-    order: [[0, 'desc']],
-    columnDefs: [
-      { orderable: false, targets: [4, 7] },
-      { searchable: false, targets: [4, 7] },
-      { className: 'text-center', targets: [0, 3, 4, 5, 6, 7] }
-    ],
-    language: {
-      search: 'Pesquisar:',
-      zeroRecords: 'Nenhum registro encontrado',
-      dom: '<"pull-left"f><"pull-right"l>tip',
-      decimal: "",
-      emptyTable: "Nenhum registro encontrado",
-      info: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-      infoEmpty: "Mostrando 0 até 0 de 0 registros",
-      infoFiltered: "(Filtrados de _MAX_ registros)",
-      infoPostFix: "",
-      thousands: ".",
-      lengthMenu: "Mostrar _MENU_ Registros",
-      loadingRecords: "Carregando...",
-      processing: "Processando...",
-      select: {
-        rows: {
-          _: "Selecionado %d linhas",
-          0: "Nenhuma linha selecionada",
-          1: "Selecionado 1 linha"
-        }
-      },
-      aria: {
-        sortAscending: ': ative para ordenar a coluna em ordem crescente',
-        sortDescending: ': ative para ordenar a coluna em ordem decrescente',
-      },
-      paginate: {
-        first: 'Primeiro',
-        last: 'Último',
-        next: 'Próximo',
-        previous: 'Anterior',
-      }
-    },
-  });
-
-  // Setup - add a text input to each footer cell
-  $('#todos tfoot th').each(function (i) {
-    var title = $('#todos thead th').eq($(this).index()).text();
-
-    if (!['#', 'Ações', 'Items'].includes(title)) {
-      $(this).html('<input class="form-control" type="search" placeholder="' + title + '" data-index="' + i + '" />');
-    } else {
-      $(this).html('<span class="text-white" data-index="' + i + '"></span>');
-    }
-  });
-
-  // Filter event handler
-  $(table.table().container()).on('keyup', 'tfoot input', function () {
-    table
-      .column($(this).data('index'))
-      .search(this.value)
-      .draw();
-  });
 });

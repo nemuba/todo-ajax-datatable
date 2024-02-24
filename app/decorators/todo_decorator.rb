@@ -25,18 +25,18 @@ class TodoDecorator < ApplicationDecorator
   private
 
   def btn_show
-    link_show(link: h.todo_path(object), title: 'Visualizar', icon: 'fa-search', remote: true)
+    link_show(link: h.todo_path(object))
   end
 
   def btn_edit
-    link_edit(link: h.edit_todo_path(object), title: 'Editar', icon: 'fa-pencil', remote: true)
+    link_edit(link: h.edit_todo_path(object))
   end
 
   def btn_destroy
-    link_destroy(link: h.todo_path(object), title: 'Excluir', icon: 'fa-trash', onClick: 'App.Todo.destroy(this)')
+    link_destroy(link: h.todo_path(object), onClick: 'App.Todo.destroy(this)')
   end
 
   def btn_clone
-    link_clone(link: h.clone_todo_path(object), title: 'Clonar', icon: 'fa-refresh', remote: true)
+    link_clone(link: h.clone_todo_path(object))
   end
 end
