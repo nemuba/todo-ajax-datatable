@@ -1,3 +1,4 @@
+<div class="modal-body">
 <p>
   <strong>Title:</strong>
   <%= todo.title %>
@@ -31,3 +32,9 @@
     <% end %>
   </tbody>
 </table>
+</div>
+<div class="modal-footer d-flex justify-content-between m-1">
+  <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" onclick="App.Todo.closeModal();">
+    <%= icon_solid { 'fa-times' } %> Fechar
+  </button>
+</div>
