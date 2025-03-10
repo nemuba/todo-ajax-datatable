@@ -20,6 +20,7 @@
   <%= datatable_ajax(id: 'todos', url: todos_path(format: :json)) do %>
     <tfoot>
       <tr>
+        <th></th>
         <th>#</th>
         <th>Titulo</th>
         <th>Descrição</th>
@@ -46,7 +47,7 @@
   // Submit form to import todos
   $('#import_todo').on('submit', function(e) {
     e.preventDefault();
-    
+
     var form = $(this);
 
     if(form.find('input[type="file"]').val() == '') {

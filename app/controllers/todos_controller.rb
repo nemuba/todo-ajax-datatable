@@ -18,22 +18,27 @@ class TodosController < ApplicationController
   end
 
   # GET /todos/1 or /todos/1.json
-  def show; end
+  def show
+    render 'todos/js/show'
+  end
 
   # GET /todos/new
   def new
     @todo = Todo.new
+    render 'todos/js/new'
   end
 
   # GET /todos/1/edit
-  def edit; end
+  def edit
+    render 'todos/js/edit'
+  end
 
   # POST /todos or /todos.json
   def create
     @todo = Todo.new(todo_params)
 
     respond_to do |format|
-      format.js
+      format.js { render 'todos/js/create' }
       if @todo.save
         format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully created.' }
         format.json { render :show, status: :created, location: @todo }
@@ -47,7 +52,7 @@ class TodosController < ApplicationController
   # PATCH/PUT /todos/1 or /todos/1.json
   def update
     respond_to do |format|
-      format.js
+      format.js { render 'todos/js/update' }
       if @todo.update(todo_params)
         format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully updated.' }
         format.json { render :show, status: :ok, location: @todo }
@@ -63,7 +68,7 @@ class TodosController < ApplicationController
     @todo.destroy
 
     respond_to do |format|
-      format.js
+      format.js { render 'todos/js/destroy' }
       format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
       format.json { head :no_content }
     end
@@ -73,19 +78,23 @@ class TodosController < ApplicationController
     DeleteAllJob.perform_later(params[:ids])
 
     respond_to do |format|
-      format.js
-      format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
+      format.js { render 'todos/js/delete_all' }
+      format.html { redirect_to todos_url, notice: 'Todos were successfully destroyed.' }
     end
   end
 
   def import
     TodoService.import(params[:file])
+
+    render 'todos/js/import'
   end
 
   def clone
     @items = @todo.items.map(&:dup)
     @todo = @todo.dup
     @todo.items = @items
+
+    render 'todos/js/clone'
   end
 
   private

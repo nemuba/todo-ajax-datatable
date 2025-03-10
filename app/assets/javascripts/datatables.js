@@ -30,9 +30,11 @@ Datatable = {
     this.settings = this.settings.bind(this);
     this.load = this.load.bind(this);
     this.add_search = this.add_search.bind(this);
+    this.add_select_all = this.add_select_all.bind(this);
     this.settings();
     this.load('todos');
     this.add_search('todos');
+    this.add_select_all('todos');
   },
   settings: function () {
     $.extend($.fn.dataTable.defaults, {
@@ -241,6 +243,15 @@ Datatable = {
         { extend: 'delete_all', className: 'btn btn-danger' },
       ],
       columns: [
+        {
+          title: '<input type="checkbox" id="select-all-rows">',
+          data: null,
+          orderable: false,
+          searchable: false,
+          render: function () {
+            return '<input type="checkbox" class="row-select">';
+          }
+        },
         { title: '#', data: 'id' },
         { title: 'Título', data: 'title' },
         { title: 'Descrição', data: 'description' },
@@ -251,11 +262,11 @@ Datatable = {
         { title: 'Ações', data: "actions" }
       ],
       select: true,
-      order: [[0, 'desc']],
+      order: [[1, 'desc']],
       columnDefs: [
-        { orderable: false, targets: [4, 7] },
-        { searchable: false, targets: [4, 7] },
-        { className: 'text-center', targets: [0, 3, 4, 5, 6, 7] }
+        { orderable: false, targets: [5, 8] }, // 'Items' e 'Ações'
+        { searchable: false, targets: [5, 8] },
+        { className: 'text-center', targets: [0, 1, 4, 5, 6, 7, 8] }
       ],
       language: {
         search: 'Pesquisar:',
@@ -289,6 +300,34 @@ Datatable = {
           previous: 'Anterior',
         }
       },
+    });
+  },
+  add_select_all: function (table_id) {
+    const table = $(`#${table_id}`).DataTable();
+    // Evento para selecionar/deselecionar todas as linhas via header checkbox
+    $(document).on('click', '#select-all-rows', function () {
+      if ($(this).prop('checked')) {
+        table.rows().select();
+        // Marca as caixas de seleção de cada linha
+        table.rows().nodes().each(function (row) {
+          $(row).find('.row-select').prop('checked', true);
+        });
+      } else {
+        table.rows().deselect();
+        table.rows().nodes().each(function (row) {
+          $(row).find('.row-select').prop('checked', false);
+        });
+      }
+    });
+
+    // Evento para cada checkbox de linha atualizar a seleção da linha correspondente
+    $(table.table().container()).on('change', '.row-select', function () {
+      var $row = $(this).closest('tr');
+      if (this.checked) {
+        table.row($row).select();
+      } else {
+        table.row($row).deselect();
+      }
     });
   },
   add_search: function (table_id) {
