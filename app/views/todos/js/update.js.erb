@@ -4,8 +4,8 @@ $('turbolinks:load').ready(function() {
   <% if @todo.errors.empty? %>
 
     <!-- Fecha modal -->
-    App.Todo.closeModal();
-  
+    App.Modal.close();
+
     <!-- Recarrega o datatable -->
     App.Todo.refreshDataTableAjax();
 
@@ -15,7 +15,7 @@ $('turbolinks:load').ready(function() {
   <!-- Senão recarrega o modal com os erros -->
   <% else %>
     <!-- Renderiza os erros -->
-    App.Todo.render_errors('<%= j render 'errors', todo: @todo %>')
+    App.Modal.setErrors('<%= j render 'errors', todo: @todo %>');
 
     <!-- Exibe mensagem de erro -->
     Toast.error('Preencha todos os campos!');

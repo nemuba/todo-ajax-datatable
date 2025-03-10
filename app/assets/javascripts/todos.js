@@ -1,24 +1,8 @@
 $(document).on('turbolinks:load', function () {
   const App = window.App || {};
 
+  App.Modal = Modal.init();
   App.Todo = {
-    validation: () => {
-      $('#modal .form-control').filter(function () {
-        return ($(this).val() == '');
-      }).first().focus();
-      $('#modal .form-control').each(function () {
-        if ($(this).val() == '') {
-          $(this).addClass('is-invalid');
-        } else {
-          $(this).removeClass('is-invalid');
-        }
-      });
-    },
-    render_errors: (partial) => {
-      $('#modal #todo_errors').html('');
-      $('#modal #todo_errors').append(partial);
-      App.Todo.validation();
-    },
     destroy: (e) => {
       Alert.confirm(
         'Remover Todo',
@@ -55,17 +39,6 @@ $(document).on('turbolinks:load', function () {
           });
         }
       });
-    },
-    renderModal: (title, partial) => {
-      $('#modal').modal('show');
-      $('#modal #modal-title').html(title);
-      $('#modal #content').html('');
-      $(partial).appendTo('#modal #content');
-    },
-    closeModal: () => {
-      $('#modal #modal-title').html('');
-      $('#modal #content').html('');
-      $('#modal').modal('hide');
     },
     refreshDataTableAjax: () => {
       $('#todos').DataTable().ajax.reload();

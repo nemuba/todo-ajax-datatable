@@ -1,4 +1,3 @@
 $('turbolinks:load').ready( function() {
-  <!-- Carrega o modal -->
-  App.Todo.renderModal('Novo Todo - Clone', "<%=j render 'form', todo: @todo %>");
+  App.Modal.show('Novo Todo - Clone', "<%=j render 'form', todo: @todo %>");
 });

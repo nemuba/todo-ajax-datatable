@@ -1,4 +1,3 @@
 $('turbolinks:load').ready( function() {
-  <!-- Carrega o modal -->
-  App.Todo.renderModal('Todo', "<%=j render 'show', todo: @todo %>");
+  App.Modal.show('Todo', "<%=j render 'show', todo: @todo %>");
 });

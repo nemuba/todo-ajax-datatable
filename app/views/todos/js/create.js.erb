@@ -2,17 +2,17 @@ $('turbolinks:load').ready(function() {
   <!-- Verifica se não houve nenhum erro e carrega os dados através da chamada AJAX -->
   <% if @todo.errors.empty? %>
     <!-- Fecha o modal -->
-    App.Todo.closeModal();
+    App.Modal.close();
 
     <!-- Recarrega o datatable usando a chamada AJAX -->
     App.Todo.refreshDataTableAjax();
 
     Toast.success('Todo Criado com sucesso !')
-  
+
   <!-- Se houver erro recarrega o modal -->
   <% else %>
     <!-- Renderiza os erros -->
-    App.Todo.render_errors('<%= j render 'errors', todo: @todo %>')
+    App.Modal.setErrors('<%= j render 'errors', todo: @todo %>');
 
     <!-- Exibe mensagem de erro -->
     Toast.error('Erro ao criar Todo !')
