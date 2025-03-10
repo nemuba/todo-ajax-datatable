@@ -7,7 +7,9 @@ Toast = {
       close: true,
       gravity: "top",
       position: "right",
-      backgroundColor: backgroundColor,
+      style: {
+        background: backgroundColor,
+      },
       stopOnFocus: true,
     }).showToast();
   },
