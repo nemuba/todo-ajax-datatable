@@ -108,6 +108,15 @@ A aplicação segue a estrutura padrão de projetos Rails, com algumas pastas ad
 - `app/decorators`: Decoradores de modelo usando Draper
 - `app/services`: Classes de serviço para lógica de negócios
 
-## Testes
 
-A aplicação utiliza RSpec para testes. Para executar a suite de testes:
+## Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
+3. Commit suas alterações (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Crie um novo Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
