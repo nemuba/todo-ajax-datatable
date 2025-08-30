@@ -1,6 +1,6 @@
 {
   "rubyLsp.gemfilePath": "/home/siedos/projects/local/ruby-lsp/Gemfile",
   "rubyLsp.enableExperimentalFeatures": true,
-  "rubyLsp.formatter": "rubocop_internal",
+  "rubyLsp.formatter": "rubocop",
   "rubyLsp.rubyVersionManager": "rbenv"
 }
