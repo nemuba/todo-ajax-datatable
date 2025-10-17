@@ -108,6 +108,94 @@ A aplicação segue a estrutura padrão de projetos Rails, com algumas pastas ad
 - `app/decorators`: Decoradores de modelo usando Draper
 - `app/services`: Classes de serviço para lógica de negócios
 
+## Testes
+
+O projeto utiliza RSpec para testes automatizados, com suporte para:
+
+- **RSpec Rails**: Framework de testes para Rails
+- **FactoryBot**: Para criação de dados de teste
+- **Shoulda Matchers**: Matchers para testes de validações e associações
+- **DatabaseCleaner**: Para limpar o banco de dados entre testes
+- **SimpleCov**: Para relatório de cobertura de código
+
+### Executando os Testes
+
+```bash
+# Executar todos os testes
+bundle exec rspec
+# ou
+rake spec
+
+# Executar testes específicos
+bundle exec rspec spec/models
+bundle exec rspec spec/controllers
+bundle exec rspec spec/models/todo_spec.rb
+
+# Usar rake tasks
+rake spec:models           # Apenas testes de modelos
+rake spec:controllers      # Apenas testes de controllers
+rake spec:coverage         # Gerar relatório de cobertura
+
+# Executar com formatação detalhada
+bundle exec rspec --format documentation
+
+# Gerar relatório de cobertura (veja em coverage/index.html)
+bundle exec rspec
+```
+
+### Documentação de Testes
+
+- **[Guia Rápido](spec/QUICK_START.md)**: Comandos e exemplos rápidos para começar
+- **[Guia Completo](spec/README.md)**: Documentação detalhada sobre como escrever e organizar testes
+
+### Estrutura de Testes
+
+```
+spec/
+├── factories/          # Definições de factories para testes
+│   ├── todos.rb
+│   └── items.rb
+├── models/            # Testes de modelos
+│   ├── todo_spec.rb
+│   └── item_spec.rb
+├── controllers/       # Testes de controllers
+│   └── todos_controller_spec.rb
+├── support/           # Arquivos de suporte
+│   ├── factory_bot.rb
+│   └── simplecov.rb
+├── rails_helper.rb    # Configuração principal do RSpec para Rails
+└── spec_helper.rb     # Configuração geral do RSpec
+```
+
+### Escrevendo Testes
+
+Os testes seguem as convenções do RSpec e utilizam FactoryBot para criação de dados:
+
+```ruby
+# Exemplo de teste de modelo
+RSpec.describe Todo, type: :model do
+  describe 'validations' do
+    it { should validate_presence_of(:title) }
+  end
+
+  describe 'factory' do
+    it 'has a valid factory' do
+      todo = build(:todo)
+      expect(todo).to be_valid
+    end
+  end
+end
+
+# Exemplo de teste de controller
+RSpec.describe TodosController, type: :controller do
+  describe 'GET #index' do
+    it 'returns a success response' do
+      get :index
+      expect(response).to be_successful
+    end
+  end
+end
+```
 
 ## Contribuindo
 
