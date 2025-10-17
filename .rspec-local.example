@@ -1,0 +1,22 @@
+# Exemplo de configuração local do RSpec
+# Copie este arquivo para .rspec-local e customize conforme necessário
+# O arquivo .rspec-local é ignorado pelo git
+
+# Formato de saída (descomente o que preferir)
+# --format progress
+# --format documentation
+
+# Executar apenas testes marcados com :focus
+# --tag focus
+
+# Pular testes marcados com :slow
+# --tag ~slow
+
+# Perfil dos testes mais lentos
+# --profile 5
+
+# Seed específico para reproduzir ordem dos testes
+# --seed 12345
+
+# Warnings do Ruby
+# --warnings

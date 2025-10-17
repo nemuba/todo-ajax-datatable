@@ -32,5 +32,8 @@
 # Ignore RSpec examples status file
 /spec/examples.txt
 
+# Ignore local RSpec configuration
+/.rspec-local
+
 # Ignore vendor directory for bundled gems
 /vendor/bundle
