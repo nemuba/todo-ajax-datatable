@@ -18,7 +18,7 @@ RSpec.describe 'Todos', type: :request do
       it 'returns json data' do
         create_list(:todo, 3)
         get todos_path, headers: { 'Accept' => 'application/json' }
-        
+
         expect(response).to have_http_status(:success)
         expect(response.content_type).to include('application/json')
       end
@@ -84,7 +84,7 @@ RSpec.describe 'Todos', type: :request do
       it 'updates the todo' do
         patch todo_path(todo), params: new_attributes, xhr: true
         todo.reload
-        
+
         expect(todo.title).to eq('Updated Title')
         expect(todo.description).to eq('Updated Description')
       end
@@ -115,13 +115,13 @@ RSpec.describe 'Todos', type: :request do
     let(:todo) { create(:todo, :with_items) }
 
     it 'returns success response' do
-      post clone_todo_path(todo), xhr: true
+      get clone_todo_path(todo), xhr: true
       expect(response).to have_http_status(:success)
     end
 
     it 'prepares todo and items for duplication' do
-      post clone_todo_path(todo), xhr: true
-      
+      get clone_todo_path(todo), xhr: true
+
       expect(assigns(:todo)).to be_a_new(Todo)
       expect(assigns(:todo).title).to eq(todo.title)
       expect(assigns(:items)).to be_present

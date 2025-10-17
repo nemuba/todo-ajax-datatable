@@ -37,10 +37,11 @@ gem 'wkhtmltopdf-binary'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop-rails', require: false
-  gem 'rspec-rails', '~> 5.0'
-  gem 'factory_bot_rails', '~> 6.2'
-  gem 'shoulda-matchers', '~> 5.0'
-  gem 'faker', '~> 2.23'
+  gem 'rspec-rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 5.2'
+  gem 'shoulda-matchers', '~> 4.5'
+  gem 'faker', '~> 2.21.0'
+  gem 'rails-controller-testing'
 end
 
 group :test do

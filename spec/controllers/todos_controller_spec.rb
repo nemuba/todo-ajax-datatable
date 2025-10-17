@@ -25,14 +25,14 @@ RSpec.describe TodosController, type: :controller do
     let(:todo) { create(:todo) }
 
     it 'returns a success response' do
-      get :show, params: { id: todo.to_param }, format: :js
+      get :show, params: { id: todo.to_param }, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, format: :js
+      get :new, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe TodosController, type: :controller do
     let(:todo) { create(:todo) }
 
     it 'returns a success response' do
-      get :edit, params: { id: todo.to_param }, format: :js
+      get :edit, params: { id: todo.to_param }, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe TodosController, type: :controller do
 
       it 'creates a new Todo' do
         expect {
-          post :create, params: { todo: valid_attributes }, format: :js
+          post :create, params: { todo: valid_attributes }, format: :js, xhr: true
         }.to change(Todo, :count).by(1)
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe TodosController, type: :controller do
 
       it 'does not create a new Todo' do
         expect {
-          post :create, params: { todo: invalid_attributes }, format: :js
+          post :create, params: { todo: invalid_attributes }, format: :js, xhr: true
         }.to change(Todo, :count).by(0)
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe TodosController, type: :controller do
       end
 
       it 'updates the requested todo' do
-        patch :update, params: { id: todo.to_param, todo: new_attributes }, format: :js
+        patch :update, params: { id: todo.to_param, todo: new_attributes }, format: :js, xhr: true
         todo.reload
         expect(todo.title).to eq('Updated Title')
         expect(todo.description).to eq('Updated Description')
@@ -109,7 +109,7 @@ RSpec.describe TodosController, type: :controller do
 
       it 'does not update the todo' do
         original_title = todo.title
-        patch :update, params: { id: todo.to_param, todo: invalid_attributes }, format: :js
+        patch :update, params: { id: todo.to_param, todo: invalid_attributes }, format: :js, xhr: true
         todo.reload
         expect(todo.title).to eq(original_title)
       end
@@ -121,7 +121,7 @@ RSpec.describe TodosController, type: :controller do
 
     it 'destroys the requested todo' do
       expect {
-        delete :destroy, params: { id: todo.to_param }, format: :js
+        delete :destroy, params: { id: todo.to_param }, format: :js, xhr: true
       }.to change(Todo, :count).by(-1)
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe TodosController, type: :controller do
     let(:todo) { create(:todo, :with_items) }
 
     it 'duplicates the todo and its items' do
-      get :clone, params: { id: todo.to_param }, format: :js
+      get :clone, params: { id: todo.to_param }, format: :js, xhr: true
       expect(response).to be_successful
       expect(assigns(:todo)).to be_a_new(Todo)
       expect(assigns(:todo).title).to eq(todo.title)
