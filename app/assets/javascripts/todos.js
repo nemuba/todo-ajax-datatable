@@ -1,6 +1,19 @@
 $(document).on('turbolinks:load', function () {
   const App = window.App || {};
 
+  const handleAjaxError = (xhr, status, error) => {
+    if (xhr.status === 422) {
+      const errors = xhr.responseJSON.errors;
+      let errorMessage = 'Erro ao processar a solicitação:';
+      for (const key in errors) {
+        errorMessage += `\n${key}: ${errors[key].join(', ')}`;
+      }
+      Alert.error('Erro', errorMessage);
+    } else {
+      Alert.error('Erro', 'Ocorreu um erro inesperado. Tente novamente mais tarde.');
+    }
+  }
+
   App.Modal = Modal.init();
   App.Todo = {
     destroy: (e) => {
@@ -13,7 +26,9 @@ $(document).on('turbolinks:load', function () {
             url: e.dataset.source,
             method: e.dataset.method,
             success: function (response) {
-            }
+              App.Todo.refreshDataTableAjax();
+            },
+            error: handleAjaxError
           });
         }
       });
@@ -35,7 +50,8 @@ $(document).on('turbolinks:load', function () {
             data: { ids: ids },
             success: function (data) {
               App.Todo.refreshDataTableAjax();
-            }
+            },
+            error: handleAjaxError
           });
         }
       });
@@ -67,7 +83,8 @@ $(document).on('turbolinks:load', function () {
         success: function (data) {
           form[0].reset();
           $('input[type="submit"]').prop('disabled', false);
-        }
+        },
+        error: handleAjaxError
       });
     },
     load_table: () => {
