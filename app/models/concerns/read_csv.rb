@@ -13,7 +13,7 @@ module ReadCsv
       query = row.to_h.slice('title', 'description', 'done')
       next if Todo.exists?(query)
 
-      list << Todo.new(row.to_h.except('id', 'items'))
+      list << Todo.new(row.to_h.except('id', 'items_count'))
     end
 
     list

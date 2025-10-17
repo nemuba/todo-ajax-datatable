@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Todo < ApplicationRecord
-  extend ExportCsv
+  include ExportCsv
   extend ReadCsv
 
   validates :title, :description, presence: true
