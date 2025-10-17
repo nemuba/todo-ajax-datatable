@@ -123,11 +123,18 @@ O projeto utiliza RSpec para testes automatizados, com suporte para:
 ```bash
 # Executar todos os testes
 bundle exec rspec
+# ou
+rake spec
 
 # Executar testes específicos
 bundle exec rspec spec/models
 bundle exec rspec spec/controllers
 bundle exec rspec spec/models/todo_spec.rb
+
+# Usar rake tasks
+rake spec:models           # Apenas testes de modelos
+rake spec:controllers      # Apenas testes de controllers
+rake spec:coverage         # Gerar relatório de cobertura
 
 # Executar com formatação detalhada
 bundle exec rspec --format documentation
@@ -135,6 +142,11 @@ bundle exec rspec --format documentation
 # Gerar relatório de cobertura (veja em coverage/index.html)
 bundle exec rspec
 ```
+
+### Documentação de Testes
+
+- **[Guia Rápido](spec/QUICK_START.md)**: Comandos e exemplos rápidos para começar
+- **[Guia Completo](spec/README.md)**: Documentação detalhada sobre como escrever e organizar testes
 
 ### Estrutura de Testes
 
