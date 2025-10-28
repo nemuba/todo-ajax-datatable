@@ -148,7 +148,10 @@
   // Mounts adicionais para melhor performance
   "mounts": [
     "source=todo-ajax-datatable-gems,target=/usr/local/bundle,type=volume",
-    "source=todo-ajax-datatable-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+    "source=todo-ajax-datatable-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+    // Mount para chaves SSH do host
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached,readonly",
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached,readonly"
   ],
   // Configuração de usuário
   "remoteUser": "vscode",
@@ -157,6 +160,10 @@
     "RAILS_ENV": "development",
     "RACK_ENV": "development",
     "DATABASE_HOST": "postgres",
-    "REDIS_URL": "redis://redis:6379/0"
-  }
+    "REDIS_URL": "redis://redis:6379/0",
+    "SSH_AUTH_SOCK": "/tmp/ssh-agent.sock"
+  },
+  // Configurações adicionais para SSH
+  "initializeCommand": "ssh-add -l > /dev/null 2>&1 || echo 'SSH agent não está rodando ou sem chaves carregadas'",
+  "onCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.ssh && chmod 700 /home/vscode/.ssh && chmod 600 /home/vscode/.ssh/* || true"
 }

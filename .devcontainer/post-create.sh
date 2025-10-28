@@ -3,6 +3,36 @@ set -e
 
 echo "🚀 Executando script post-create..."
 
+echo "🚀 Configurando ambiente de desenvolvimento..."
+
+# Configurar permissões SSH
+if [ -d "/home/vscode/.ssh" ]; then
+    echo "🔑 Configurando permissões SSH..."
+    sudo chown -R vscode:vscode /home/vscode/.ssh
+    chmod 700 /home/vscode/.ssh
+    find /home/vscode/.ssh -type f -exec chmod 600 {} \;
+
+    # Configurar SSH config se não existir
+    if [ ! -f "/home/vscode/.ssh/config" ]; then
+        echo "📝 Criando configuração SSH..."
+        cat > /home/vscode/.ssh/config << EOF
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+EOF
+        chmod 600 /home/vscode/.ssh/config
+    fi
+fi
+
+# Configurar Git se ainda não estiver configurado
+if [ ! "$(git config --global user.name)" ]; then
+    echo "⚙️  Configure seu Git com:"
+    echo "git config --global user.name 'Seu Nome'"
+    echo "git config --global user.email 'seu.email@example.com'"
+fi
+
 # Descobrir diretório do workspace (VS Code exporta DEVCONTAINER_WORKSPACE_FOLDER)
 WORKSPACE_DIR="${DEVCONTAINER_WORKSPACE_FOLDER:-/workspaces/todo-ajax-datatable}"
 cd "$WORKSPACE_DIR"
