@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Rails server",
+      "type": "Ruby",
+      "request": "launch",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": [
+        "server",
+        "-b",
+        "0.0.0.0"
+      ]
+    },
+    {
+      "name": "RSpec - all",
+      "type": "Ruby",
+      "request": "launch",
+      "program": "${workspaceRoot}/bin/rspec",
+      "args": [
+        "-I",
+        "${workspaceRoot}"
+      ]
+    },
+    {
+      "name": "RSpec - active spec file only",
+      "type": "Ruby",
+      "request": "launch",
+      "program": "${workspaceRoot}/bin/rspec",
+      "args": [
+        "-I",
+        "${workspaceRoot}",
+        "${file}"
+      ]
+    },
+    {
+      "name": "Attach to Rails",
+      "type": "Ruby",
+      "request": "attach",
+      "remoteWorkspaceRoot": "${workspaceRoot}",
+      "remoteHost": "localhost",
+      "remotePort": "1234",
+      "cwd": "${workspaceRoot}"
+    }
+  ]
+}

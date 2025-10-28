@@ -21,7 +21,7 @@ begin
     end
 
     desc 'Run all specs with coverage'
-    task :coverage do
+    task coverage: :environment do
       ENV['COVERAGE'] = 'true'
       Rake::Task['spec'].invoke
     end

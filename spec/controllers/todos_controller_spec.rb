@@ -57,9 +57,9 @@ RSpec.describe TodosController, type: :controller do
       end
 
       it 'creates a new Todo' do
-        expect {
+        expect do
           post :create, params: { todo: valid_attributes }, format: :js, xhr: true
-        }.to change(Todo, :count).by(1)
+        end.to change(Todo, :count).by(1)
       end
     end
 
@@ -73,9 +73,9 @@ RSpec.describe TodosController, type: :controller do
       end
 
       it 'does not create a new Todo' do
-        expect {
+        expect do
           post :create, params: { todo: invalid_attributes }, format: :js, xhr: true
-        }.to change(Todo, :count).by(0)
+        end.to change(Todo, :count).by(0)
       end
     end
   end
@@ -120,9 +120,9 @@ RSpec.describe TodosController, type: :controller do
     let!(:todo) { create(:todo) }
 
     it 'destroys the requested todo' do
-      expect {
+      expect do
         delete :destroy, params: { id: todo.to_param }, format: :js, xhr: true
-      }.to change(Todo, :count).by(-1)
+      end.to change(Todo, :count).by(-1)
     end
   end
 

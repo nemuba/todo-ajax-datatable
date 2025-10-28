@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-vscode-remote.remote-containers",
+    "rebornix.ruby",
+    "castwide.solargraph",
+    "bung87.rails",
+    "ms-azuretools.vscode-docker",
+    "ckolkman.vscode-postgres",
+    "aliariff.vscode-erb-beautify",
+    "editorconfig.editorconfig"
+  ]
+}

@@ -102,6 +102,7 @@ GEM
       sass-rails
     font-awesome-sass (6.5.1)
       sassc (~> 2.0)
+    foreman (0.87.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.7)
@@ -323,6 +324,7 @@ DEPENDENCIES
   faker (~> 2.21.0)
   flag-icons-rails
   font-awesome-sass (~> 6.5.1)
+  foreman
   jbuilder (~> 2.5)
   jquery-datatables
   jquery-rails

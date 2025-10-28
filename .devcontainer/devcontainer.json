@@ -1,0 +1,162 @@
+{
+  "name": "TODO AJAX DataTable - Rails 5.2",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/todo-ajax-datatable",
+  // Configuração de features e extensões
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
+  // Extensões do VS Code recomendadas
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Ruby/Rails
+        "Shopify.ruby-lsp",
+        "misogi.ruby-rubocop",
+        "kaiwood.endwise",
+        "bung87.rails",
+        "hridoy.rails-snippets",
+        // Database
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        // JavaScript/Frontend
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "formulahendry.auto-rename-tag",
+        // Docker
+        "ms-azuretools.vscode-docker",
+        // Git
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        // Utilidades
+        "wayou.vscode-todo-highlight",
+        "aaron-bond.better-comments",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+        // Testing
+        "connorshea.vscode-test-explorer-status-bar",
+        // ERB/HTML
+        "aliariff.vscode-erb-beautify",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        // Ruby/Rails settings
+        "ruby.lint": {
+          "rubocop": true
+        },
+        "ruby.format": "rubocop",
+        "ruby.useBundler": true,
+        "ruby.intellisense": "rubyLocate",
+        // Editor settings
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+          80,
+          120
+        ],
+        // Files settings
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.associations": {
+          "*.html.erb": "erb",
+          "*.js.erb": "javascript",
+          "*.css.erb": "css",
+          "Gemfile": "ruby",
+          "Rakefile": "ruby",
+          "config.ru": "ruby"
+        },
+        // Search settings
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/bower_components": true,
+          "**/.git": true,
+          "**/tmp": true,
+          "**/log": true,
+          "**/vendor": true,
+          "**/coverage": true
+        },
+        // Terminal settings
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        // PostgreSQL connection
+        "sqltools.connections": [
+          {
+            "name": "PostgreSQL - Development",
+            "driver": "PostgreSQL",
+            "server": "postgres",
+            "port": 5432,
+            "database": "ajax-jquery-crud_development",
+            "username": "postgres",
+            "password": "admin",
+            "connectionTimeout": 30
+          },
+          {
+            "name": "PostgreSQL - Test",
+            "driver": "PostgreSQL",
+            "server": "postgres",
+            "port": 5432,
+            "database": "ajax-jquery-crud_test",
+            "username": "postgres",
+            "password": "admin",
+            "connectionTimeout": 30
+          }
+        ]
+      }
+    }
+  },
+  // Comandos pós-criação do container
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  // Comandos pós-start do container
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  // Portas a serem expostas
+  "forwardPorts": [
+    3000, // Rails server
+    5432, // PostgreSQL
+    6379, // Redis
+    3001 // Sidekiq Web UI (opcional)
+  ],
+  // Labels para as portas
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails Application",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    },
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "silent"
+    },
+    "3001": {
+      "label": "Sidekiq Web UI",
+      "onAutoForward": "silent"
+    }
+  },
+  // Mounts adicionais para melhor performance
+  "mounts": [
+    "source=todo-ajax-datatable-gems,target=/usr/local/bundle,type=volume",
+    "source=todo-ajax-datatable-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ],
+  // Configuração de usuário
+  "remoteUser": "vscode",
+  // Variáveis de ambiente
+  "remoteEnv": {
+    "RAILS_ENV": "development",
+    "RACK_ENV": "development",
+    "DATABASE_HOST": "postgres",
+    "REDIS_URL": "redis://redis:6379/0"
+  }
+}

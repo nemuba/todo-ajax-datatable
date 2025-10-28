@@ -32,7 +32,7 @@ RSpec.describe Item, type: :model do
     it 'can be true or false' do
       item_completed = create(:item, status: true)
       item_incomplete = create(:item, status: false)
-      
+
       expect(item_completed.status).to be true
       expect(item_incomplete.status).to be false
     end

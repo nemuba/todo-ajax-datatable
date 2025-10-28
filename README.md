@@ -17,7 +17,7 @@ Este é um aplicativo de tarefas que permite adicionar, editar, excluir e marcar
 
 ## Tecnologias Utilizadas
 
-- **Ruby**: 2.5.3
+- **Ruby**: 2.7.8
 - **Rails**: 5.2.3
 - **PostgreSQL**: Para armazenamento de dados
 - **Bootstrap**: Framework CSS para interface responsiva
@@ -36,14 +36,37 @@ Este é um aplicativo de tarefas que permite adicionar, editar, excluir e marcar
 
 ## Configuração
 
-### Requisitos
+### 🚀 Método Recomendado: DevContainer (Mais Fácil!)
 
-- Ruby 2.5.3
+**A maneira mais rápida e fácil de começar é usando DevContainer:**
+
+1. Instale [Docker Desktop](https://www.docker.com/products/docker-desktop) e [VS Code](https://code.visualstudio.com/)
+2. Instale a extensão [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Abra o projeto no VS Code
+4. Pressione `F1` → "Dev Containers: Reopen in Container"
+5. Aguarde a construção (primeira vez: ~10 minutos)
+6. Execute: `foreman start -f Procfile.dev`
+7. Acesse: <http://localhost:3000>
+
+✨ **Tudo está configurado automaticamente!** Ruby, Rails, PostgreSQL, Redis, Sidekiq, e todas as dependências.
+
+📚 **Documentação completa do DevContainer:**
+
+- [Guia Rápido](.devcontainer/QUICK_START.md) - Comece em 5 minutos
+- [Documentação Completa](.devcontainer/README.md) - Referência detalhada
+- [Comandos Úteis](.devcontainer/COMMANDS.md) - Lista de comandos
+- [Checklist de Verificação](.devcontainer/CHECKLIST.md) - Troubleshooting
+
+### Instalação Manual (Alternativa)
+
+#### Requisitos
+
+- Ruby 2.7.8
 - Rails 5.2.3
 - PostgreSQL
 - Redis (para Sidekiq)
 
-### Instalação
+#### Passos
 
 1. Clone o repositório
 

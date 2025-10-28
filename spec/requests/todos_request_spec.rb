@@ -38,9 +38,9 @@ RSpec.describe 'Todos', type: :request do
       end
 
       it 'creates a new todo' do
-        expect {
+        expect do
           post todos_path, params: valid_params, xhr: true
-        }.to change(Todo, :count).by(1)
+        end.to change(Todo, :count).by(1)
       end
 
       it 'returns success response' do
@@ -61,9 +61,9 @@ RSpec.describe 'Todos', type: :request do
       end
 
       it 'does not create a new todo' do
-        expect {
+        expect do
           post todos_path, params: invalid_params, xhr: true
-        }.not_to change(Todo, :count)
+        end.not_to change(Todo, :count)
       end
     end
   end
@@ -100,9 +100,9 @@ RSpec.describe 'Todos', type: :request do
     let!(:todo) { create(:todo) }
 
     it 'destroys the todo' do
-      expect {
+      expect do
         delete todo_path(todo), xhr: true
-      }.to change(Todo, :count).by(-1)
+      end.to change(Todo, :count).by(-1)
     end
 
     it 'returns success response' do

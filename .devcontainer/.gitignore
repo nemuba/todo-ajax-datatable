@@ -1,0 +1,7 @@
+# DevContainer - Arquivos e volumes gerados
+.devcontainer/.env
+.devcontainer/*.log
+
+# Volumes Docker
+node_modules/
+vendor/bundle/

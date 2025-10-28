@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        # Ruby version - atualizado para compatibilidade com ferramentas atuais
+        RUBY_VERSION: 2.7.8
+        NODE_VERSION: 14
+
+    volumes:
+      - ..:/workspaces/todo-ajax-datatable:cached
+      - todo-ajax-datatable-gems:/usr/local/bundle
+      - todo-ajax-datatable-node-modules:/workspaces/todo-ajax-datatable/node_modules
+
+    # Manter o container rodando
+    command: sleep infinity
+
+    # Variáveis de ambiente
+    environment:
+      RAILS_ENV: development
+      RACK_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ajax-jquery-crud_development
+      REDIS_URL: redis://redis:6379/1
+      REDIS_HOST: redis
+      RAILS_MAX_THREADS: 5
+
+    # Redes
+    networks:
+      - todo-ajax-datatable-network
+
+    # Dependências
+    depends_on:
+      - postgres
+      - redis
+
+    # Usuário do container
+    user: vscode
+
+    # Ports expostos
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+
+  postgres:
+    image: postgres:12-alpine
+    restart: unless-stopped
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ajax-jquery-crud_development
+
+    networks:
+      - todo-ajax-datatable-network
+
+    ports:
+      - "5432:5432"
+
+    # Healthcheck
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+    volumes:
+      - redis-data:/data
+
+    networks:
+      - todo-ajax-datatable-network
+
+    ports:
+      - "6379:6379"
+
+    # Healthcheck
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    command: redis-server --appendonly yes
+
+volumes:
+  postgres-data:
+  redis-data:
+  todo-ajax-datatable-gems:
+  todo-ajax-datatable-node-modules:
+
+networks:
+  todo-ajax-datatable-network:
+    driver: bridge
