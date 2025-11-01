@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 # The behavior of RuboCop can be controlled via the .rubocop.yml
 # configuration file. It makes it possible to enable/disable
 # certain cops (checks) and to alter their behavior if they accept
@@ -10,18 +12,78 @@
 # See https://docs.rubocop.org/rubocop/configuration
 
 AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.5
   Exclude:
     - 'bin/**/*'
     - 'vendor/**/*'
     - 'db/**/*'
+    - 'node_modules/**/*'
+    - 'coverage/**/*'
+    - 'log/**/*'
+    - 'tmp/**/*'
+    - 'storage/**/*'
+    - 'public/assets/**/*'
+    - 'todo-ajax-datatable/**/*'
+    - 'config.ru'
+    - 'spec/examples.txt'
+    - 'lib/templates/**/*'
     - 'app/decorators/**/*'
     - 'app/datatables/**/*'
 
 require:
   - rubocop-rails
+  - rubocop-rspec
 
+# Style Cops
 Style/Documentation:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+# Metrics - Configuração flexível
 Metrics/MethodLength:
-  Enabled: false
+  Max: 25
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Max: 25
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'
+    - 'config/environments/*.rb'
+
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/ClassLength:
+  Max: 150
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/ModuleLength:
+  Max: 150
+  Exclude:
+    - 'spec/**/*'
+
+# Rails Cops
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - test
+    - production
+
+# RSpec Cops - Configuração flexível
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleExpectations:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 5

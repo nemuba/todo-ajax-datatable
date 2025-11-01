@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+  controllers:
+    todos:
+      created: "Todo was successfully created."
+      updated: "Todo was successfully updated."
+      destroyed: "Todo was successfully destroyed."
+      deleted_all: "Todos were successfully destroyed."

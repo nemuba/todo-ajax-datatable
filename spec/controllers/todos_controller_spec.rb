@@ -4,14 +4,14 @@ require 'rails_helper'
 
 RSpec.describe TodosController, type: :controller do
   describe 'GET #index' do
-    context 'as HTML' do
+    context 'when requested as HTML' do
       it 'returns a success response' do
         get :index
         expect(response).to be_successful
       end
     end
 
-    context 'as JSON' do
+    context 'when requested as JSON' do
       it 'returns json data for datatables' do
         create_list(:todo, 3)
         get :index, format: :json
@@ -75,7 +75,7 @@ RSpec.describe TodosController, type: :controller do
       it 'does not create a new Todo' do
         expect do
           post :create, params: { todo: invalid_attributes }, format: :js, xhr: true
-        end.to change(Todo, :count).by(0)
+        end.not_to change(Todo, :count)
       end
     end
   end

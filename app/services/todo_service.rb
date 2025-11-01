@@ -3,7 +3,7 @@
 class TodoService
   class << self
     def import(tempfile)
-      File.open(file_path, 'wb') { |file| file.write(tempfile.read) }
+      File.binwrite(file_path, tempfile.read)
 
       ImportJob.perform_later(file_path)
     end

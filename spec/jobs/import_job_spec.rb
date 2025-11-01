@@ -32,11 +32,11 @@ RSpec.describe ImportJob, type: :job do
 
         todo1 = Todo.find_by(title: 'Test Todo 1')
         expect(todo1.description).to eq('Description 1')
-        expect(todo1.done).to eq(false)
+        expect(todo1.done).to be(false)
 
         todo2 = Todo.find_by(title: 'Test Todo 2')
         expect(todo2.description).to eq('Description 2')
-        expect(todo2.done).to eq(true)
+        expect(todo2.done).to be(true)
       end
 
       it 'deletes the file after import' do
@@ -46,12 +46,14 @@ RSpec.describe ImportJob, type: :job do
       end
 
       it 'broadcasts success message to import channel' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(file_path)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'import_channel',
           hash_including(message: /Importação finalizada/)
         )
-
-        described_class.perform_now(file_path)
       end
     end
 
@@ -102,12 +104,14 @@ RSpec.describe ImportJob, type: :job do
       end
 
       it 'broadcasts warning message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(empty_file_path)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'import_channel',
           hash_including(message: /Nenhum registro novo/, type: 'warning')
         )
-
-        described_class.perform_now(empty_file_path)
       end
     end
 

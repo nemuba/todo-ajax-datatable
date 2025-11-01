@@ -10,7 +10,7 @@ RSpec.configure do |config|
   end
 
   # Configurar estratégia padrão para cada teste
-  config.before(:each) do |example|
+  config.before do |example|
     # Para testes que usam JavaScript, Capybara ou jobs em background,
     # usamos truncation porque transaction não funciona com múltiplos threads
     DatabaseCleaner.strategy = if example.metadata[:js] || example.metadata[:type] == :feature
@@ -24,7 +24,7 @@ RSpec.configure do |config|
   end
 
   # Limpar após cada teste
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 end

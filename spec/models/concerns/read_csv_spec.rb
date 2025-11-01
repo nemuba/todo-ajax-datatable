@@ -34,7 +34,7 @@ RSpec.describe ReadCsv, type: :concern do
         first_todo = list.first
         expect(first_todo.title).to eq('Todo 1')
         expect(first_todo.description).to eq('Description 1')
-        expect(first_todo.done).to eq(false)
+        expect(first_todo.done).to be(false)
       end
 
       it 'does not include id in the new todos' do
@@ -117,9 +117,11 @@ RSpec.describe ReadCsv, type: :concern do
       end
 
       it 'does not broadcast error message' do
-        expect(ActionCable.server).not_to receive(:broadcast)
+        allow(ActionCable.server).to receive(:broadcast)
 
         Todo.csv_valid?(file_path)
+
+        expect(ActionCable.server).not_to have_received(:broadcast)
       end
     end
 
@@ -131,12 +133,14 @@ RSpec.describe ReadCsv, type: :concern do
       end
 
       it 'broadcasts error message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        Todo.csv_valid?(non_existent_file)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'import_channel',
           hash_including(message: /Arquivo inválido/, type: 'error')
         )
-
-        Todo.csv_valid?(non_existent_file)
       end
     end
 
@@ -156,12 +160,14 @@ RSpec.describe ReadCsv, type: :concern do
       end
 
       it 'broadcasts error message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        Todo.csv_valid?(txt_file)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'import_channel',
           hash_including(message: /Arquivo inválido/, type: 'error')
         )
-
-        Todo.csv_valid?(txt_file)
       end
     end
 
@@ -184,12 +190,14 @@ RSpec.describe ReadCsv, type: :concern do
       end
 
       it 'broadcasts error message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        Todo.csv_valid?(invalid_file)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'import_channel',
           hash_including(message: /Arquivo inválido/, type: 'error')
         )
-
-        Todo.csv_valid?(invalid_file)
       end
     end
 

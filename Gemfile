@@ -44,6 +44,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0'
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'shoulda-matchers', '~> 4.5'
 end
 

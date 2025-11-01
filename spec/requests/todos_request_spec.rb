@@ -14,7 +14,7 @@ RSpec.describe 'Todos', type: :request do
       expect(response).to render_template(:index)
     end
 
-    context 'as JSON' do
+    context 'when requested as JSON' do
       it 'returns json data' do
         create_list(:todo, 3)
         get todos_path, headers: { 'Accept' => 'application/json' }

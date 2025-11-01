@@ -4,16 +4,16 @@ require 'rails_helper'
 
 RSpec.describe Todo, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:description) }
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:description) }
   end
 
   describe 'associations' do
-    it { should have_many(:items).dependent(:destroy) }
+    it { is_expected.to have_many(:items).dependent(:destroy) }
   end
 
   describe 'nested attributes' do
-    it { should accept_nested_attributes_for(:items).allow_destroy(true) }
+    it { is_expected.to accept_nested_attributes_for(:items).allow_destroy(true) }
   end
 
   describe 'factory' do

@@ -25,19 +25,23 @@ RSpec.describe DeleteAllJob, type: :job do
       end
 
       it 'broadcasts success message to delete_all channel' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(ids_to_delete)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'delete_all_channel',
           hash_including(message: /Exclusão em lote finalizada com sucesso/)
         )
-
-        described_class.perform_now(ids_to_delete)
       end
 
       it 'uses a database transaction' do
         # Verificar se o método transaction é chamado pelo menos uma vez
-        expect(Todo).to receive(:transaction).at_least(:once).and_call_original
+        allow(Todo).to receive(:transaction).and_call_original
 
         described_class.perform_now(ids_to_delete)
+
+        expect(Todo).to have_received(:transaction).at_least(:once)
       end
     end
 
@@ -57,12 +61,14 @@ RSpec.describe DeleteAllJob, type: :job do
       end
 
       it 'broadcasts success message anyway' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(invalid_ids)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'delete_all_channel',
           hash_including(message: /Exclusão em lote finalizada com sucesso/)
         )
-
-        described_class.perform_now(invalid_ids)
       end
     end
 
@@ -72,12 +78,14 @@ RSpec.describe DeleteAllJob, type: :job do
       end
 
       it 'broadcasts error message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(ids_to_delete)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'delete_all_channel',
           hash_including(message: /Database error/, type: 'error')
         )
-
-        described_class.perform_now(ids_to_delete)
       end
 
       it 'does not delete any todos due to transaction rollback' do
@@ -99,12 +107,14 @@ RSpec.describe DeleteAllJob, type: :job do
       end
 
       it 'broadcasts success message' do
-        expect(ActionCable.server).to receive(:broadcast).with(
+        allow(ActionCable.server).to receive(:broadcast)
+
+        described_class.perform_now(empty_ids)
+
+        expect(ActionCable.server).to have_received(:broadcast).with(
           'delete_all_channel',
           hash_including(message: /Exclusão em lote finalizada com sucesso/)
         )
-
-        described_class.perform_now(empty_ids)
       end
     end
   end

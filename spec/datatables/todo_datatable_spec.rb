@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe TodoDatatable, type: :datatable do
-  let(:view) { double('view', params: {}) }
+  let(:view) { instance_double(ActionView::Base, params: {}) }
   let(:params) { {} }
   let(:datatable) { described_class.new(params, view_context: view) }
 
@@ -23,11 +23,12 @@ RSpec.describe TodoDatatable, type: :datatable do
   end
 
   describe '#data' do
-    let!(:todo1) { create(:todo, title: 'First Todo', done: false) }
-    let!(:todo2) { create(:todo, :completed, title: 'Second Todo') }
-    let!(:todo_with_items) { create(:todo, :with_items, title: 'Todo with items') }
+    let(:todo_with_items) { create(:todo, :with_items, title: 'Todo with items') }
 
     before do
+      create(:todo, title: 'First Todo', done: false)
+      create(:todo, :completed, title: 'Second Todo')
+      todo_with_items
       # Mock the datatable to return our todos
       allow(datatable).to receive(:records).and_return(Todo.includes(:items).all)
     end
@@ -83,8 +84,11 @@ RSpec.describe TodoDatatable, type: :datatable do
   end
 
   describe '#get_raw_records' do
-    let!(:todo1) { create(:todo) }
-    let!(:todo2) { create(:todo, :with_items) }
+    before do
+      # Ensure there are todos in the database
+      create(:todo)
+      create(:todo, :with_items)
+    end
 
     it 'returns all todos' do
       records = datatable.send(:get_raw_records)

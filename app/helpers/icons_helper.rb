@@ -2,10 +2,10 @@
 
 module IconsHelper
   def icon_regular(color = 'text-black', &block)
-    "<i class='fa-regular #{block.call} #{color}'></i>".html_safe
+    content_tag(:i, nil, class: "fa-regular #{block.call} #{color}")
   end
 
   def icon_solid(color = 'text-white', &block)
-    "<i class='fa-solid #{block.call} #{color}'></i>".html_safe
+    content_tag(:i, nil, class: "fa-solid #{block.call} #{color}")
   end
 end

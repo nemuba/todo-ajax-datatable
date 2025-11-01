@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe TodoService, type: :service do
   describe '.import' do
-    let(:tempfile) { double('tempfile', read: 'csv content') }
+    let(:tempfile) { instance_double(Tempfile, read: 'csv content') }
     let(:file_path) { Rails.root.join('tmp/import.csv').to_path }
 
     before do
@@ -27,9 +27,11 @@ RSpec.describe TodoService, type: :service do
     end
 
     it 'enqueues an ImportJob' do
-      expect(ImportJob).to receive(:perform_later).with(file_path)
+      allow(ImportJob).to receive(:perform_later)
 
       described_class.import(tempfile)
+
+      expect(ImportJob).to have_received(:perform_later).with(file_path)
     end
 
     it 'creates the file before enqueuing the job' do

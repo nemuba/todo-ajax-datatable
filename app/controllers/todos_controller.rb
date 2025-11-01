@@ -40,7 +40,7 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.js { render 'todos/js/create' }
       if @todo.save
-        format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully created.' }
+        format.html { redirect_to todo_url(@todo), notice: t('controllers.todos.created') }
         format.json { render :show, status: :created, location: @todo }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.js { render 'todos/js/update' }
       if @todo.update(todo_params)
-        format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully updated.' }
+        format.html { redirect_to todo_url(@todo), notice: t('controllers.todos.updated') }
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       format.js { render 'todos/js/destroy' }
-      format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
+      format.html { redirect_to todos_url, notice: t('controllers.todos.destroyed') }
       format.json { head :no_content }
     end
   end
@@ -79,7 +79,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       format.js { render 'todos/js/delete_all' }
-      format.html { redirect_to todos_url, notice: 'Todos were successfully destroyed.' }
+      format.html { redirect_to todos_url, notice: t('controllers.todos.deleted_all') }
     end
   end
 
