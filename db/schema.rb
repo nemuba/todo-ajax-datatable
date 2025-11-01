@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2023_11_29_011921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "items", force: :cascade do |t|
     t.string "description", null: false
